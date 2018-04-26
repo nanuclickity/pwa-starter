@@ -35,10 +35,11 @@ export default class TreeItem extends Component {
           <div className="leaf-image" />
           <div className="leaf-details">
             <div className="leaf-title">{title}</div>
-            <div classname="leaf-subtitle">{subtitle}</div>
+            <div className="leaf-subtitle">{subtitle}</div>
           </div>
         </div>
-        {!!children && <div className={childrenCx}>{children}</div>}
+        {!!children &&
+          this.state.isOpen && <div className={childrenCx}>{children}</div>}
       </div>
     )
   }
@@ -52,7 +53,7 @@ TreeItem.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
   // name to display
-  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 
   // additional classname to support composition outside tree component if required
   className: PropTypes.string,

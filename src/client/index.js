@@ -9,6 +9,8 @@ import { configureStore, saveLocalState, loadLocalState } from './store/index'
 import createHistory from 'history/createBrowserHistory'
 
 import Root from './containers/Root'
+
+//eslint-disable-next-line no-unused-vars
 import registerServiceWorker from './register-service-worker'
 
 // Create Initial History Object
@@ -73,6 +75,6 @@ if (module.hot) {
   })
 }
 
-if (process.env.NODE_ENV === 'production') {
-  registerServiceWorker()
-}
+// if (process.env.NODE_ENV === 'production') {
+//   registerServiceWorker()
+// }

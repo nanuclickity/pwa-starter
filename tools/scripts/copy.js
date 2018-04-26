@@ -17,7 +17,9 @@ module.exports = function copyTask(cb) {
 
   const manifestPath = `${PATHS.BUILD}/public/vendor-manifest.json`
 
-  if (!fs.existsSync(manifestPath)) commands.push(`echo "{}" > ${manifestPath}`)
+  if (!fs.existsSync(manifestPath)) {
+    commands.push(`echo "{}" > ${manifestPath}`)
+  }
 
   Object.keys(ASSETS).forEach(srcPath => {
     commands.push(`cp -r ${srcPath} ${ASSETS[srcPath]}`)

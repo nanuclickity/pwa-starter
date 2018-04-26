@@ -41,17 +41,17 @@ export default function getRouter(app) {
   router.use('/api', APIRouter)
 
   // No server rendering
-  // router.get('*', handleStaticFiles, (req, res) => {
-  //   res.render('index', getTemplateData(req))
-  // })
+  router.get('*', handleStaticFiles, (req, res) => {
+    res.render('index', getTemplateData(req))
+  })
 
   // Server rendering
-  router.get(
-    '*',
-    handleStaticFiles,
-    handleAppShellRequest,
-    require('../renderer').StreamingRenderer
-  )
+  // router.get(
+  //   '*',
+  //   handleStaticFiles,
+  //   handleAppShellRequest,
+  //   require('../renderer').StreamingRenderer
+  // )
 
   return router
 }

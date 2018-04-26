@@ -29,6 +29,7 @@ const runServer = app => {
 initConfig(app) // reads config
   .then(readDependencies) // reads webpack assets and other files
   .then(configureServer) // configures express server
+  .then(reloadLibrary)
   .then(runServer) // run server
   .catch(console.error.bind(console)) // report any startup errors
 

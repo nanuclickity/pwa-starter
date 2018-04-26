@@ -34,6 +34,8 @@ config.cache = IS_DEV
 
 config.target = 'web'
 
+// config.externals = ['crypto']
+
 config.stats = {
   modules: false,
   children: false // hides output from extract-text-plugin
@@ -158,10 +160,9 @@ config.optimization = {
     name: true,
     cacheGroups: {
       vendors: {
+        test: /\/node_modules\//,
         name: 'vendors',
-        chunks: 'all',
-        enforce: true,
-        minChunks: 2
+        minChunks: 3
       }
     }
   }

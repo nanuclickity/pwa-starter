@@ -10,7 +10,8 @@ mixin lazy_scripts()
       var css = [
         '#{webpack_assets["main.css"]}',
         'https://fonts.googleapis.com/icon?family=Material+Icons',
-        'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'
+        'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700',
+        'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'
       ]
 
       css.filter(x => !!x).forEach(function(href){

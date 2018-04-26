@@ -1,4 +1,4 @@
-$brand-color = orange;
+$brand-color = darkorchid;
 $border-color = #ccc;
 $line-width  = 1px;
 $line-color  = $border-color;
@@ -26,8 +26,8 @@ $line-color  = $border-color;
     .ui-tree-view-list {
         background-color: #fff;
         border: 1px $brand-color solid;    
-        width: 300px;
-        height: 400px;
+        width: 400px;
+        height: 500px;
         overflow: auto;
 
         padding: 12px;
@@ -92,6 +92,10 @@ $line-color  = $border-color;
             z-index: -1;
             background-color: $line-color;
         }
+        &:hover {
+            border-color: $brand-color;
+            cursor: default;
+        }
     }
     .tree-leaf-children .tree-leaf {
         padding-left: 40px;
@@ -115,16 +119,12 @@ $line-color  = $border-color;
 :local(.container) .tree-leaf-children {
     overflow: hidden;
     max-height: 0;
-    will-change: transform, max-height;
-    transform-origin: center top;
-    transform: scaleY(0);
-    transition: transform 0.16s ease-in, max-height 0.16s ease;
-
     &.is-open {
         max-height: 999px;
-        transform: scaleY(1);
     }
-
+    &.is-open > .tree-leaf {
+        animation: fadeInDown 0.2s;
+    }
 }
 
 
@@ -151,6 +151,7 @@ $line-color  = $border-color;
         background-color: $line-color;
         border-radius: 50%;
         margin-right: 12px;
+        flex-shrink: 0;
     }
     .leaf-title {
         font-size: 14px;
@@ -158,5 +159,18 @@ $line-color  = $border-color;
     .leaf-subtitle {
         font-size: 10px;
     }
+}
 
+
+// Search Result
+:local(.container) {
+    .ui-tree-view-search-result {
+        margin: 20px 0;
+        .tree-leaf-inner {
+            margin: 0;    
+        }
+    }
+    .ui-tree-view-search-input {
+        width: 100%;
+    }
 }

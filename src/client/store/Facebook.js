@@ -1,4 +1,4 @@
-import { v4 } from 'node-uuid'
+import v4 from 'uuid/v4'
 
 // import sample from 'lodash/sample'
 

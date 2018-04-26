@@ -15,6 +15,7 @@ export default function AppRoutes(location, auth) {
       <Route path="/about" component={Pages.AboutPage} />
       <Route path="/contact" component={Pages.ContactPage} />
       <Route path="/fb-page" component={Pages.FacebookPage} />
+      <Route path="/music" component={Pages.MusicPage} />
       <Route path="/404" exact component={Pages.NotFoundPage} />
       <Route component={Pages.NotFoundPage} />
     </Switch>
