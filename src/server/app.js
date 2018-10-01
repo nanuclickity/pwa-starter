@@ -3,7 +3,6 @@ import express from 'express'
 
 import { configureServer, readDependencies } from './configure'
 import { Config, initConfig } from './config'
-import { reloadLibrary } from 'music/library'
 
 const debug = require('debug')('react-app:server')
 
@@ -29,11 +28,11 @@ const runServer = app => {
 initConfig(app) // reads config
   .then(readDependencies) // reads webpack assets and other files
   .then(configureServer) // configures express server
-  .then(reloadLibrary)
   .then(runServer) // run server
   .catch(console.error.bind(console)) // report any startup errors
 
 export function getServerInstance() {
   return serverInstance
 }
+
 export default app

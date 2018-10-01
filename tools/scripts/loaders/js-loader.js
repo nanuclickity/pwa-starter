@@ -3,8 +3,7 @@ const PATHS = require('../../paths')
 module.exports = function CreateJSLoader() {
   const envOptions = {
     cacheDirectory: process.env.NODE_ENV !== 'production',
-    compact: process.env.NODE_ENV === 'production',
-    presets: ['react-app']
+    compact: process.env.NODE_ENV === 'production'
   }
 
   return {

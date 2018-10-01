@@ -7,8 +7,6 @@ import s from './HomePage.styl'
 
 // import HeroSection from './HeroSection'
 
-import TreeView from 'components/ui/TreeView'
-
 export default class HomePage extends Component {
   state = {
     isHeaderFixed: true
@@ -24,8 +22,6 @@ export default class HomePage extends Component {
           <div className="container">
             MT Tree View
             <br />
-            <br />
-            <TreeView />
           </div>
         </div>
       </AppShell>

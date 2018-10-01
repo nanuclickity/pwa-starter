@@ -1,5 +1,0 @@
-/**
- * Try
- */
-
-module.exports = []
