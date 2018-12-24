@@ -5,9 +5,8 @@ const IS_PROD = process.env.NODE_ENV === 'production'
 const _CSS_LOADER = (isServer = false) => ({
   loader: 'css-loader',
   options: {
-    minimize: IS_PROD,
     sourceMap: !IS_PROD && !isServer,
-    localIdentName: !IS_PROD && '[name]_[local]_[hash:base64:3]'
+    localIdentName: IS_PROD ? '[hash:base64:4]' : '[name]_[local]_[hash:base64:3]'
   }
 })
 
