@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import { connectRouter } from 'connected-react-router'
 
 import Facebook from './Facebook'
 
-export default combineReducers({
-  router: routerReducer,
-  Facebook
-})
+export default function createRootReducer(history) {
+  return combineReducers({
+    router: connectRouter(history),
+    Facebook
+  })
+}

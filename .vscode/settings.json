@@ -3,13 +3,18 @@
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
   "search.exclude": {
-    "node_modules/": true
+    "**/node_modules/*/**": true
   },
   "files.exclude": {
-    "node_modules/": true,
+    "**/node_modules/*/**": true,
     "build/": true,
     "dist/": true,
     "package-lock.json": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true
   },
   "prettier.jsxBracketSameLine": true,
   "prettier.useTabs": false,
@@ -26,5 +31,9 @@
   "languageStylus.useSeparator": true,
   "npm-intellisense.importES6": true,
   "eslint.alwaysShowStatus": true,
-  "css.fileExtensions": ["css", "scss", "styl"]
+  "css.fileExtensions": [
+    "css",
+    "scss",
+    "styl"
+  ]
 }
