@@ -5,7 +5,7 @@ import AppShell from 'containers/AppShell'
 
 import s from './HomePage.styl'
 
-// import HeroSection from './HeroSection'
+import HeroSection from './HeroSection'
 
 export default class HomePage extends Component {
   state = {
@@ -19,10 +19,7 @@ export default class HomePage extends Component {
     return (
       <AppShell className={s.container} headerProps={headerProps}>
         <div className="home-content">
-          <div className="container">
-            MT Tree View
-            <br />
-          </div>
+          <HeroSection />
         </div>
       </AppShell>
     )

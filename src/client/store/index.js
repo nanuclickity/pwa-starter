@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import { routerMiddleware } from 'react-router-redux'
-import rootReducer from './rootReducer'
+import { routerMiddleware } from 'connected-react-router'
+import createRootReducer from './rootReducer'
 
 import debounce from 'lodash/debounce'
 
@@ -41,15 +41,15 @@ export function configureStore(initialState = {}, history) {
 
   // Devtools for development mode on client
   const devTools =
-    !__SERVER__ && window.devToolsExtension
-      ? window.devToolsExtension()
+    !__SERVER__ && window.__REDUX_DEVTOOLS_EXTENSION__
+      ? window.__REDUX_DEVTOOLS_EXTENSION__()
       : f => f
 
   // Composed store enhancer
   const composed = compose(applyMiddleware(...middlewares), devTools)
 
   // Create the store
-  store = createStore(rootReducer, initialState, composed)
+  store = createStore(createRootReducer(history), initialState, composed)
 
   // Easier debugging in dev mode
   if (process.env.NODE_ENV === 'development' && !__SERVER__) {
@@ -59,7 +59,7 @@ export function configureStore(initialState = {}, history) {
   // Handle hot updates
   if (__DEV__ && module.hot) {
     module.hot.accept('./rootReducer', () => {
-      store.replaceReducer(rootReducer)
+      store.replaceReducer(createRootReducer(history))
     })
   }
 
