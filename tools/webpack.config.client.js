@@ -131,7 +131,7 @@ if (IS_DEV) {
 }
 
 if (IS_PROD) {
-  config.entry.vendors = [PATHS.SRC_CLIENT + '/vendors.js']
+  config.entry.vendors = ['react', 'react-dom']
   config.plugins = [
     new webpack.NormalModuleReplacementPlugin(
       /\.\/getStaticRoutes/,
