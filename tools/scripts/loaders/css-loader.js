@@ -31,7 +31,7 @@ const _CSS_LOADER = (isServer = false) => ({
   options: {
     sourceMap: !IS_PROD && !isServer,
     modules: 'global',
-    localIdentName: IS_PROD ? '[hash:base64:4]' : '[name]_[local]_[hash:base64:3]'
+    //localIdentName: IS_PROD ? '[hash:base64:4]' : '[name]_[local]_[hash:base64:3]'
   }
 })
 
@@ -41,7 +41,7 @@ const _POSTCSS_LOADER = (isServer = false) => ({
     plugins: () => [
       require('postcss-flexbugs-fixes'),
       autoprefixer({
-        browsers: ['> 3%', 'last 4 versions', 'iOS 7'],
+        //browsers: ['> 3%', 'last 4 versions', 'iOS 7'],
         flexbox: 'no-2009'
       })
     ],
