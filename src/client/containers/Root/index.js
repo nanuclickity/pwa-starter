@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 
 import { ConnectedRouter } from 'connected-react-router'
@@ -39,4 +40,10 @@ export default class RootContainer extends Component {
       </Provider>
     )
   }
+}
+
+RootContainer.propTypes = {
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  renderCounter: PropTypes.number
 }

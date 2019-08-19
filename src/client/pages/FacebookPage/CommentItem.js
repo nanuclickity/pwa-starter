@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 import moment from 'moment'
 
 import NewComment from './NewComment'
@@ -68,4 +68,15 @@ export default class CommentItem extends Component {
       </div>
     )
   }
+}
+
+CommentItem.propTypes = {
+  id: PropTypes.any,
+  user: PropTypes.any,
+  message: PropTypes.any,
+  children: PropTypes.any,
+  likesCount: PropTypes.any,
+  updatedAt: PropTypes.any,
+  onLikeClick: PropTypes.any,
+  onRequestAdd: PropTypes.any
 }

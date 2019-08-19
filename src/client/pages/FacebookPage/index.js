@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import sortBy from 'lodash/sortBy'
@@ -76,6 +77,12 @@ class FacebookPage extends Component {
   }
 }
 
+FacebookPage.propTypes = {
+  comments: PropTypes.any,
+  addComment: PropTypes.any,
+  addLike: PropTypes.any
+}
+
 const mapStateToProps = state => ({
   isLoading: state.Facebook.isLoading,
   hasError: state.Facebook.hasError,
@@ -91,4 +98,7 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FacebookPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FacebookPage)

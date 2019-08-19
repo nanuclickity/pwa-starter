@@ -37,7 +37,8 @@ class AppShell extends Component {
 AppShell.propTypes = {
   children: PropTypes.node,
   headerProps: PropTypes.object,
-  sidebarProps: PropTypes.object
+  sidebarProps: PropTypes.object,
+  className: PropTypes.string
 }
 
 AppShell.defaultProps = {

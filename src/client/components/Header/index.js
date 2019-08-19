@@ -10,12 +10,6 @@ import Navigation from './Navigation'
 import s from './Header.styl'
 
 class Header extends Component {
-  static propTypes = {
-    sticky: PropTypes.bool,
-    fixed: PropTypes.bool,
-    onMenuClick: PropTypes.func
-  }
-
   static defaultProps = {
     sticky: false,
     fixed: false
@@ -38,7 +32,7 @@ class Header extends Component {
       <header className={cx}>
         <Logo
           className="header-logo"
-          primaryText="REACT"
+          primaryText="REAC1T"
           secondaryText="APP"
           onClick={this.props.onMenuClick}
         />
@@ -49,10 +43,21 @@ class Header extends Component {
   }
 }
 
+Header.propTypes = {
+  sticky: PropTypes.bool,
+  fixed: PropTypes.bool,
+  onMenuClick: PropTypes.func,
+  className: PropTypes.string,
+  transparent: PropTypes.bool
+}
+
 const mapStateToProps = state => ({
   pathname: state.router.location.pathname
 })
 
 const mapDispatchToProps = dispatch => ({})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header)

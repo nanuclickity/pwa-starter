@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const { InjectManifest } = require('workbox-webpack-plugin')
 
-const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')
+// const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')
 
 const Config = require('../config')
 
@@ -207,5 +207,4 @@ config.devServer = {
   }
 }
 
-const smp = new SpeedMeasureWebpackPlugin()
-module.exports = smp.wrap(config)
+module.exports = config
