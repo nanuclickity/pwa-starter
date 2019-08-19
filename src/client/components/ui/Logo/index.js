@@ -29,7 +29,11 @@ Logo.defaultProps = {
   noText: false
 }
 Logo.propTypes = {
-  noText: PropTypes.bool
+  noText: PropTypes.bool,
+  className: PropTypes.string,
+  primaryText: PropTypes.string,
+  secondaryText: PropTypes.string,
+  onClick: PropTypes.func
 }
 
 export default Logo

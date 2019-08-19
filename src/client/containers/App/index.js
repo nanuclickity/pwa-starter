@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 // import classnames from 'classnames'
 
 import { connect } from 'react-redux'
@@ -11,6 +12,11 @@ import AppOverlays from './AppOverlays'
 // to whatever page they were on
 
 class App extends Component {
+  static propTypes = {
+    location: PropTypes.object,
+    auth: PropTypes.any
+  }
+
   componentDidMount = () => {}
 
   render() {
