@@ -36,7 +36,7 @@ function getGzipSizes(list) {
 function prettyPrintSizes(stats) {
   const t = new Table()
   stats.forEach(stat => {
-    const compression = Math.floor(stat.size * 100 / stat.original)
+    const compression = Math.floor((stat.size * 100) / stat.original)
     t.cell('filename', stat.filename)
     t.cell('original', stat.original + 'KB')
     t.cell('gzipped', chalk.green(stat.size + 'KB'))

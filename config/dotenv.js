@@ -11,7 +11,6 @@ const OVERRIDE_KEYS = [
   // add keys to override here
 ]
 
-
 /**
  * Safely injects a .env config file
  * Warns when values are being overwritten
@@ -25,14 +24,15 @@ function checkAndInject(filePath) {
     if (!process.env[key]) {
       process.env[key] = parsed[key]
     } else if (process.env[key] && OVERRIDE_KEYS.includes(key)) {
-      debug(`[WARN]: Force-Overwriting '${key}' from '${filePath}' because it exists in OVERRIDE_KEYS list`)
+      debug(
+        `[WARN]: Force-Overwriting '${key}' from '${filePath}' because it exists in OVERRIDE_KEYS list`
+      )
       process.env[key] = parsed[key]
     } else {
       debug(`[WARN]: Skipping '${key}' because already present in process.env`)
     }
   })
 }
-
 
 // Throw an uncaught error if config can't be read
 // This safely exits node.js process
@@ -63,8 +63,7 @@ function readConfig(filePath, config) {
   }
 }
 
-
-module.exports = (config) => {
+module.exports = config => {
   if (config.ENV.isProdLike) {
     readConfig(`${config.PATHS.ROOT}/.env.common`, config)
     readConfig(`${config.PATHS.ROOT}/.env`, config)

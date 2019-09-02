@@ -55,9 +55,7 @@ function RenderOneRoute(routePath) {
       ? 'index.html'
       : routePath.replace('/', '') + '.html'
 
-  const cmd = `curl http://localhost:${CONFIG.NODE_PORT}${routePath} -o ${
-    PATHS.BUILD
-  }/${routeName}`
+  const cmd = `curl http://localhost:${CONFIG.NODE_PORT}${routePath} -o ${PATHS.BUILD}/${routeName}`
   return run(cmd)
 }
 
@@ -67,8 +65,8 @@ function RenderRoutes({ routesToRender, server }) {
     process.on('SIGTERM', () => CloseServer(server))
   }
 
-  return Promise.mapSeries(routesToRender, RenderOneRoute).then(
-    () => (WITH_SERVER ? CloseServer(server) : Promise.resolve())
+  return Promise.mapSeries(routesToRender, RenderOneRoute).then(() =>
+    WITH_SERVER ? CloseServer(server) : Promise.resolve()
   )
 }
 

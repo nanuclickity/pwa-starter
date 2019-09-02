@@ -21,7 +21,7 @@ server.listen(port)
 server.on('error', onServerError)
 server.on('listening', onListening)
 
-function onServerError (error) {
+function onServerError(error) {
   if (error.syscall !== 'listen') {
     throw error
   }
@@ -41,13 +41,13 @@ function onServerError (error) {
   }
 }
 
-function onListening () {
+function onListening() {
   var addr = server.address()
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
   debug('Listening on ' + bind)
 }
 
 export default app
-export function getServerInstance () {
+export function getServerInstance() {
   return server
 }

@@ -23,14 +23,15 @@ non hashed classnames are easlier to target with
 complex css rules, javascript and code editor completions
 */
 
-
 const _CSS_LOADER = (isServer = false) => ({
   loader: 'css-loader',
   options: {
     sourceMap: ENV.isDevelopment && !isServer,
     modules: {
       mode: 'global',
-      localIdentName: ENV.isProdLike ? '[hash:base64:4]' : '[name]_[local]_[hash:base64:3]'
+      localIdentName: ENV.isProdLike
+        ? '[hash:base64:4]'
+        : '[name]_[local]_[hash:base64:3]'
     }
   }
 })

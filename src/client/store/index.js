@@ -46,7 +46,10 @@ export function configureStore(initialState = {}, history) {
       : f => f
 
   // Composed store enhancer
-  const composed = compose(applyMiddleware(...middlewares), devTools)
+  const composed = compose(
+    applyMiddleware(...middlewares),
+    devTools
+  )
 
   // Create the store
   store = createStore(createRootReducer(history), initialState, composed)
