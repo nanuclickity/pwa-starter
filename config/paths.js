@@ -1,7 +1,7 @@
-const path = require('path')
-const ROOT = path.resolve(__dirname, '../')
+const path = require("path")
+const ROOT = path.resolve(__dirname, "../")
 
-const BUILD_DIR = process.env.DIST_MODE === '1' ? 'dist' : 'build'
+const BUILD_DIR = process.env.DIST_MODE === "1" ? "dist" : "build"
 
 module.exports = {
   ROOT: ROOT,
