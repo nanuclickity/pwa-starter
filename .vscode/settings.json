@@ -2,6 +2,9 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "npm-intellisense.importES6": true,
   "search.exclude": {
     "**/node_modules/*/**": true
   },
@@ -15,17 +18,5 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/**": true
-  },
-  "prettier.jsxBracketSameLine": true,
-  "prettier.useTabs": false,
-  "editor.formatOnPaste": false,
-  "editor.formatOnType": false,
-  "editor.formatOnSave": true,
-  "prettier.tabWidth": 2,
-  "prettier.printWidth": 80,
-  "prettier.semi": false,
-  "prettier.singleQuote": true,
-  "npm-intellisense.importES6": true,
-  "eslint.alwaysShowStatus": true,
-  "css.fileExtensions": ["css", "scss", "styl"]
+  }
 }
