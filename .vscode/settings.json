@@ -22,18 +22,12 @@
   "editor.formatOnType": true,
   "editor.formatOnSave": true,
   "prettier.tabWidth": 2,
-  "prettier.eslintIntegration": true,
   "prettier.printWidth": 80,
   "prettier.semi": false,
   "prettier.singleQuote": true,
-  "prettier.stylelintIntegration": true,
   "languageStylus.useBuiltinFunctions": true,
   "languageStylus.useSeparator": true,
   "npm-intellisense.importES6": true,
   "eslint.alwaysShowStatus": true,
-  "css.fileExtensions": [
-    "css",
-    "scss",
-    "styl"
-  ]
+  "css.fileExtensions": ["css", "scss", "styl"]
 }
