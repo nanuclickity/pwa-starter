@@ -8,7 +8,7 @@ const debug = require('debug')('app:config')
  * safe to override
  */
 const OVERRIDE_KEYS = [
-  // add keys to override ehre
+  // add keys to override here
 ]
 
 
