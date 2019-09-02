@@ -11,7 +11,6 @@ const LOADERS = require('./loaders')
 
 const { ENV, PATHS } = config
 
-
 const hash = ENV.isProdLike ? 'contenthash:8' : 'hash'
 
 const webpackConfig = {
@@ -27,7 +26,9 @@ const webpackConfig = {
   },
   output: {
     chunkFilename: `[name].[${hash}].chunk.js`,
-    filename: ENV.isProdLike ? `[name].[${hash}].bundle.js` : `[name].bundle.js`,
+    filename: ENV.isProdLike
+      ? `[name].[${hash}].bundle.js`
+      : `[name].bundle.js`,
     path: PATHS.BUILD_PUBLIC,
     pathinfo: true,
     publicPath: config.get('webpackPublicPath'),
@@ -39,9 +40,7 @@ const webpackConfig = {
   resolve: {
     modules: ['node_modules', PATHS.NODE_MODULES, PATHS.SRC_CLIENT],
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.styl'],
-    plugins: [
-      new ModuleScopePlugin(PATHS.SRC_CLIENT)
-    ]
+    plugins: [new ModuleScopePlugin(PATHS.SRC_CLIENT)]
   },
 
   module: {
@@ -56,7 +55,6 @@ const webpackConfig = {
       LOADERS.CSS_LOADER()
     ]
   },
-
 
   plugins: [
     new webpack.DefinePlugin({
@@ -76,7 +74,6 @@ const webpackConfig = {
       debug: ENV.isDevelopment
     })
   ]
-
 }
 
 webpackConfig.optimization = {
@@ -93,11 +90,9 @@ webpackConfig.optimization = {
   }
 }
 
-
 webpackConfig.performance = {
   hints: ENV.isProdLike ? 'warning' : false
 }
-
 
 if (ENV.isProdLike) {
   webpackConfig.optimization.splitChunks.cacheGroups.styles = {
@@ -139,10 +134,9 @@ if (ENV.isProdLike) {
   ]
 }
 
-
 // Dev server specific config
 webpackConfig.devServer = {
-  publicPath: config.output.publicPath,
+  publicPath: config.get('webpackPublicPath'),
   stats: { modules: false },
   index: '',
   compress: true,
@@ -159,6 +153,5 @@ webpackConfig.devServer = {
     '**': `http://0.0.0.0:${config.get('PORT')}`
   }
 }
-
 
 module.exports = webpackConfig

@@ -74,7 +74,3 @@ if (module.hot) {
     renderApp(Root)
   })
 }
-
-if (process.env.NODE_ENV === 'production') {
-  registerServiceWorker()
-}

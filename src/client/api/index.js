@@ -3,7 +3,7 @@ import { getConfig } from 'utils/config'
 
 import { store } from 'store/index' //eslint-disable-line no-unused-vars
 
-const debug = require('debug')('react-app:api:base')
+const debug = require('debug')('app:api:base')
 
 const api = create({
   baseURL: getConfig('API_BASE'),
@@ -66,7 +66,7 @@ export const jsonAPI = function(createRequestPromise) {
  * Use this wrapper to call apis safely and,
  * ensure proper actions are dispatched while still returning original promise
  * content to return value on mapDispatchToProps
- * 
+ *
  * e.g. api as a function
  * const createFetchJobsAction = ()=> dispatch=> {
  *    return DispatchAPI(dispatch, fetchJobs, {
@@ -74,23 +74,23 @@ export const jsonAPI = function(createRequestPromise) {
  *      failure: fetchJobsFailure
  *    })
  * }
- * 
+ *
  * e.g api as a function with arguments
  * const createFetchJobsAction = (username)=> dispatch => {
  *    return DispatchAPI(dispatch, [fetchJobs, username], {
  *       success: fetchJobsSuccess,
  *       failure: fetchJobsFailure
- *    }) 
+ *    })
  * }
- * 
+ *
  * e.g. api as a promise
  * const createFetchJobsAction = (username)=> dispatch => {
  *    return DispatchAPI(dispatch, fetchJobs(username), {
  *       success: fetchJobsSuccess,
  *       failure: fetchJobsFailure
- *    }) 
+ *    })
  * }
- * 
+ *
  */
 export const DispatchAPI = (dispatchFn, promiseFn, options = {}) => {
   if (typeof options.success !== 'function') {
