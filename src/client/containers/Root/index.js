@@ -23,3 +23,5 @@ RootContainer.propTypes = {
   overlays: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 }
+
+export default RootContainer
