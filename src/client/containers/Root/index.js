@@ -1,49 +1,25 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 
 import { ConnectedRouter } from 'connected-react-router'
+import { Switch } from 'react-router-dom'
 
-import App from 'containers/App'
+import './Root.scss'
 
-import './Root.styl'
-
-export default class RootContainer extends Component {
-  componentDidMount = () => {
-    if (__SERVER__) {
-      return
-    }
-    this.updateNetworkStatus()
-    window.addEventListener('online', this.updateNetworkStatus)
-    window.addEventListener('offline', this.updateNetworkStatus)
-  }
-
-  componentWillUnmount = () => {
-    if (__SERVER__) {
-      return
-    }
-    window.removeEventListener('online', this.updateNetworkStatus)
-    window.removeEventListener('offline', this.updateNetworkStatus)
-  }
-
-  updateNetworkStatus = () => {
-    console.log('Navigator is offline: ', !navigator.onLine)
-    document.body.classList.toggle('is-offline', !navigator.onLine)
-  }
-
-  render() {
-    return (
-      <Provider store={this.props.store}>
-        <ConnectedRouter history={this.props.history}>
-          <App renderCounter={this.props.renderCounter} />
-        </ConnectedRouter>
-      </Provider>
-    )
-  }
-}
+const RootContainer = ({ store, history, routes, overlays, location }) => (
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <Switch location={location}>{routes}</Switch>
+      <Switch location={location}>{overlays}</Switch>
+    </ConnectedRouter>
+  </Provider>
+)
 
 RootContainer.propTypes = {
   store: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  renderCounter: PropTypes.number
+  routes: PropTypes.object.isRequired,
+  overlays: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }

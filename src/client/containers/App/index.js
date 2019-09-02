@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 
-import AppRoutes from './AppRoutes'
-import AppOverlays from './AppOverlays'
-
 // Overlays should be rendered aside to routes,
 // so user can always have an option to go back
 // to whatever page they were on
@@ -14,16 +11,17 @@ import AppOverlays from './AppOverlays'
 class App extends Component {
   static propTypes = {
     location: PropTypes.object,
-    auth: PropTypes.any
+    auth: PropTypes.any,
+    routes: PropTypes.object.isRequired,
+    overlays: PropTypes.object.isRequired
   }
 
-  componentDidMount = () => {}
-
   render() {
+    const { routes, overlays } = this.props
     return (
       <Fragment>
-        {AppRoutes(this.props.location, this.props.auth)}
-        {AppOverlays(this.props.location, this.props.auth)}
+        {routes}
+        {overlays}
       </Fragment>
     )
   }
