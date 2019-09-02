@@ -26,7 +26,7 @@ const PE = new PrettyError()
 
 PE.skipNodeFiles()
 PE.skipPackage('webpack', 'express', 'mysql')
-PE.skip(function(traceLine, lineNumber) {
+PE.skip(function (traceLine, lineNumber) {
   if (_.isString(traceLine.addr)) {
     traceLine = formatFilePaths(traceLine)
     return PE_SKIP_PATHS.some(x => traceLine.addr.indexOf(x) !== -1)
@@ -37,12 +37,12 @@ PE.skip(function(traceLine, lineNumber) {
 PE.appendStyle(errorTheme)
 
 // To render exceptions thrown in non-promies code:
-process.on('uncaughtException', function(error) {
+process.on('uncaughtException', function (error) {
   console.log(PE.render(error))
 })
 
 // To render unhandled rejections created in BlueBird:
-process.on('unhandledRejection', function(reason) {
+process.on('unhandledRejection', function (reason) {
   console.log('Unhandled rejection')
   console.log(PE.render(reason))
 })

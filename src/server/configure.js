@@ -1,63 +1,26 @@
-/*eslint-env node*/
-import fs from 'fs'
 import express from 'express'
-import path from 'path'
-import Promise from 'bluebird'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 
 import getRouter from './routes/index'
+import config from './config'
+// const debug = require('debug')('app:configure')
 
-import {
-  printAsTable //eslint-disable-line no-unused-vars
-} from './helpers/common'
-
-import { serveServiceWorker } from 'controllers/startup'
-
-//eslint-disable-next-line
-import { Config } from './config'
-
-const debug = require('debug')('react-app:server/configure')
-
-// Read external dependencies here
-// configs, buffers etc
-export function readDependencies(app) {
-  const assets_path = path.resolve(__dirname, './public/asset-manifest.json')
-
-  debug('Webpack Assets from: ' + assets_path)
-
-  try {
-    var assets = JSON.parse(fs.readFileSync(assets_path, 'utf-8'))
-  } catch (e) {
-    return Promise.reject(new Error('Cannot read webpack assets'))
-  }
-
-  app.set('webpack_assets', assets)
-  app.locals.webpack_assets = assets
-
-  // debug('Found assets:')
-  // printAsTable(assets)
-
-  return Promise.resolve(app)
-}
-
-// configure the express app
-export function configureServer(app) {
-  // view engine setup
-  app.set('views', path.join(__dirname, 'views'))
+export default function configure (app) {
+  app.set('views', config.PATHS.SRC_SERVER_VIEWS)
   app.set('view engine', 'pug')
 
   // Enables templates to decide env related behaviour
-  app.locals.is_prod = process.env.NODE_ENV === 'production'
+  app.locals.is_prod = config.ENV.isProdLike
 
   // Enables pretty printing of pugjs templates in dev mode
-  app.locals.pretty = process.env.NODE_ENV !== 'production'
+  app.locals.pretty = config.ENV.isDevelopment
 
   // Logger
   // 'combined' is standard apache log format
-  app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'))
+  app.use(morgan(config.ENV.isProdLike ? 'combined' : 'dev'))
 
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
@@ -66,19 +29,13 @@ export function configureServer(app) {
   app.use(compression())
 
   const staticOptions = {}
-  if (process.env.NODE_ENV === 'production') {
+  if (config.ENV.isProdLike) {
     staticOptions.maxAge = '30 days'
   }
 
-  // should we serve a service worker
-  app.use(serveServiceWorker())
-
   // Static assets should be served without cookies
   // and ideally through a cdn
-  app.use(
-    '/public',
-    express.static(path.join(__dirname, 'public'), staticOptions)
-  )
+  app.use('/public', express.static(config.PATHS.BUILD_PUBLIC, staticOptions))
 
   // Enable cookies after static routes
   app.use(cookieParser())
@@ -87,23 +44,20 @@ export function configureServer(app) {
   app.use('/', getRouter(app))
 
   // catch 404 and forward to error handler
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     var err = new Error('Not Found')
     err.status = 404
     next(err)
   })
 
   // error handler
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.error_message = err.message
-    res.locals.error = req.app.get('env') === 'development' ? err : {}
+    res.locals.error = config.ENV.isDevelopment ? err : {}
 
     // render the error page
     res.status(err.status || 500)
     res.render('error')
   })
-
-  // Return control to next bootstrapper function
-  return Promise.resolve(app)
 }
