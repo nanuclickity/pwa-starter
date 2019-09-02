@@ -1,27 +1,25 @@
+const ENV = require('../../env')
 const autoprefixer = require('autoprefixer')
-
-const IS_PROD = process.env.NODE_ENV === 'production'
-
 
 /*
 modules: 'global'
 this ensures that only the classnames inside `:local()` syntax
 are hashed, any other classnames are used as-is
 
-e.g 
+e.g
 :local(.foo) {
   .bar { color: blue; }
 }
 .baz { color: black; }
 
-will yield 
+will yield
 .foo_1adf .bar { color: blue; }
 .baz { color: black; }
 
 this gives far greater flexibity and cleanliness in architecture
 and is perfectly safe for actual css modules spec
 
-non hashed classnames are easlier to target with 
+non hashed classnames are easlier to target with
 complex css rules, javascript and code editor completions
 */
 
@@ -29,9 +27,11 @@ complex css rules, javascript and code editor completions
 const _CSS_LOADER = (isServer = false) => ({
   loader: 'css-loader',
   options: {
-    sourceMap: !IS_PROD && !isServer,
-    modules: 'global',
-    //localIdentName: IS_PROD ? '[hash:base64:4]' : '[name]_[local]_[hash:base64:3]'
+    sourceMap: ENV.isDevelopment && !isServer,
+    modules: {
+      mode: 'global',
+      localIdentName: ENV.isProdLike ? '[hash:base64:4]' : '[name]_[local]_[hash:base64:3]'
+    }
   }
 })
 
@@ -45,7 +45,7 @@ const _POSTCSS_LOADER = (isServer = false) => ({
         flexbox: 'no-2009'
       })
     ],
-    sourceMap: !IS_PROD && !isServer
+    sourceMap: ENV.isDevelopment && !isServer
   }
 })
 

@@ -1,5 +1,6 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const ENV = require('../../env')
 const PATHS = require('../../paths')
 
 const { _CSS_LOADER, _POSTCSS_LOADER } = require('./css-loader')
@@ -7,7 +8,7 @@ const { _CSS_LOADER, _POSTCSS_LOADER } = require('./css-loader')
 const _SASS_LOADER = (isServer = false) => ({
   loader: require.resolve('sass-loader'),
   options: {
-    sourceMap: !isServer && process.env.NODE_ENV !== 'production',
+    sourceMap: !isServer && ENV.isDevelopment,
     includePaths: [`${PATHS.SRC}/ui-framework`]
   }
 })
@@ -36,14 +37,12 @@ const LOADER_DEV = isServer => ({
 
 const LOADER_PROD = isServer => ({
   test: /\.(sass|scss)$/,
-  loader: ExtractTextPlugin.extract({
-    fallback: 'style-loader',
-    use: [
-      _CSS_LOADER(isServer),
-      _POSTCSS_LOADER(isServer),
-      _SASS_LOADER(isServer)
-    ]
-  })
+  use: [
+    MiniCssExtractPlugin.loader,
+    _CSS_LOADER(isServer),
+    _POSTCSS_LOADER(isServer),
+    _SASS_LOADER(isServer)
+  ]
 })
 
 // To use pre-rendering on server
@@ -53,7 +52,7 @@ module.exports = function CreateSassLoader(isServer = false) {
   if (isServer)
     //eslint-disable-line
     return LOADER_SERVER(isServer)
-  return process.env.NODE_ENV === 'production'
+  return ENV.isProdLike
     ? LOADER_PROD(isServer)
     : LOADER_DEV(isServer)
 }
