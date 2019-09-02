@@ -6,7 +6,6 @@
 const isDevelopment = process.env.NODE_ENV === 'development'
 const isProdLike = process.env.NODE_ENV === 'production'
 
-
 const isStaging = isProdLike && process.env.TRACK === 'staging'
 const isProduction = isProdLike && process.env.TRACK === 'production'
 

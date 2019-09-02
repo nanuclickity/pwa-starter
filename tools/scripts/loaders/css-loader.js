@@ -2,7 +2,6 @@ const autoprefixer = require('autoprefixer')
 
 const IS_PROD = process.env.NODE_ENV === 'production'
 
-
 /*
 modules: 'global'
 this ensures that only the classnames inside `:local()` syntax
@@ -25,12 +24,11 @@ non hashed classnames are easlier to target with
 complex css rules, javascript and code editor completions
 */
 
-
 const _CSS_LOADER = (isServer = false) => ({
   loader: 'css-loader',
   options: {
     sourceMap: !IS_PROD && !isServer,
-    modules: 'global',
+    modules: 'global'
     //localIdentName: IS_PROD ? '[hash:base64:4]' : '[name]_[local]_[hash:base64:3]'
   }
 })

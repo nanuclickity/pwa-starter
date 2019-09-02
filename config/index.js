@@ -7,7 +7,7 @@ var config = {
   ENV: require('./env'),
   PATHS: require('./paths'),
 
-  set(key, value){
+  set(key, value) {
     if (this[key]) {
       debug(`Overriding config ${key} to ${value}`)
     }
@@ -30,12 +30,10 @@ var config = {
   }
 }
 
-
 // Ensure 'this'
 config.get = config.get.bind(config)
 config.set = config.set.bind(config)
 config.toJSON = config.toJSON.bind(config)
-
 
 // Setting this here because it will be used in
 // both server and client configs
@@ -47,16 +45,10 @@ config.webpackGlobals = {
 }
 config.webpackPublicPath = '/public'
 
-
 // Ensure env for babel
 process.env.BABEL_ENV = config.ENV.NODE_ENV
 
-
 // Add env specific config
-Object.assign(
-  config,
-  require('./dotenv')(config)
-)
-
+Object.assign(config, require('./dotenv')(config))
 
 module.exports = config
