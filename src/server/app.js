@@ -1,38 +1,53 @@
 import './before-app'
 import express from 'express'
+import http from 'http'
 
-import { configureServer, readDependencies } from './configure'
-import { Config, initConfig } from './config'
+import config from './config'
+import configure from './configure'
 
-const debug = require('debug')('react-app:server')
+const debug = require('debug')('app:server')
 
 const app = express()
 
-var serverInstance
+const port = config.get('PORT') || process.env.PORT
+debug(`Using port ${port}`)
 
-const runServer = app => {
-  const port =
-    process.env.PORT && Number.isInteger(Number(process.env.PORT))
-      ? process.env.PORT
-      : Config.NODE_PORT
+// Add server configuration
+configure(app)
 
-  serverInstance = app.listen(port, function onListentingCB() {
-    debug(`Node server on http://127.0.0.1:${port}`)
-    if (__DEV__) {
-      debug(`Hot  server on http://127.0.0.1:${Config.PROXY_PORT}`)
-    }
-  })
+// Start server
+const server = http.createServer(app)
+server.listen(port)
+server.on('error', onServerError)
+server.on('listening', onListening)
+
+function onServerError (error) {
+  if (error.syscall !== 'listen') {
+    throw error
+  }
+
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges')
+      process.exit(1)
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use')
+      process.exit(1)
+    default:
+      throw error
+  }
 }
 
-// Startup steps
-initConfig(app) // reads config
-  .then(readDependencies) // reads webpack assets and other files
-  .then(configureServer) // configures express server
-  .then(runServer) // run server
-  .catch(console.error.bind(console)) // report any startup errors
-
-export function getServerInstance() {
-  return serverInstance
+function onListening () {
+  var addr = server.address()
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
+  debug('Listening on ' + bind)
 }
 
 export default app
+export function getServerInstance () {
+  return server
+}
