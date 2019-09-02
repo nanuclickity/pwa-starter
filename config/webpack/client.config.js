@@ -21,64 +21,63 @@ const webpackConfig = {
   devtool: ENV.isDevelopment ? 'cheap-module-source-map' : 'source-map',
   target: 'web',
 
-  context: PATHS.SRC
-}
+  context: PATHS.SRC,
+  entry: {
+    main: [`${PATHS.SRC_CLIENT}/index.js`]
+  },
+  output: {
+    chunkFilename: `[name].[${hash}].chunk.js`,
+    filename: ENV.isProdLike ? `[name].[${hash}].bundle.js` : `[name].bundle.js`,
+    path: PATHS.BUILD_PUBLIC,
+    pathinfo: true,
+    publicPath: config.get('webpackPublicPath'),
+    devtoolModuleFilenameTemplate: info => {
+      return path.resolve(info.absoluteResourcePath).replace(process.cwd(), '')
+    }
+  },
 
-webpackConfig.entry = {
-  main: [`${PATHS.SRC_CLIENT}/index.js`]
-}
+  resolve: {
+    modules: ['node_modules', PATHS.NODE_MODULES, PATHS.SRC_CLIENT],
+    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.styl'],
+    plugins: [
+      new ModuleScopePlugin(PATHS.SRC_CLIENT)
+    ]
+  },
 
-webpackConfig.output = {
-  chunkFilename: `[name].[${hash}].chunk.js`,
-  filename: ENV.isProdLike ? `[name].[${hash}].bundle.js` : `[name].bundle.js`,
-  path: PATHS.BUILD_PUBLIC,
-  pathinfo: true,
-  publicPath: `/public/`,
-  devtoolModuleFilenameTemplate: info => {
-    return path.resolve(info.absoluteResourcePath).replace(process.cwd(), '')
-  }
-}
+  module: {
+    strictExportPresence: true,
+    rules: [
+      LOADERS.ESLINT_LOADER(),
+      LOADERS.FILE_LOADER(),
+      LOADERS.URL_LOADER(),
+      LOADERS.JS_LOADER(),
+      // LOADERS.STYLUS_LOADER(),
+      LOADERS.SASS_LOADER(),
+      LOADERS.CSS_LOADER()
+    ]
+  },
 
-webpackConfig.resolve = {
-  modules: ['node_modules', PATHS.NODE_MODULES, PATHS.SRC_CLIENT],
-  extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.styl'],
+
   plugins: [
-    new ModuleScopePlugin(PATHS.SRC_CLIENT)
+    new webpack.DefinePlugin({
+      __IS_SERVER__: false,
+      ...config.get('webpackGlobals')
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json',
+      publicPath: config.get('webpackPublicPath')
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        context: PATHS.SRC
+      },
+      minimize: ENV.isProdLike,
+      debug: ENV.isDevelopment
+    })
   ]
+
 }
-
-
-config.module = {
-  strictExportPresence: true,
-  rules: [
-    LOADERS.ESLINT_LOADER(),
-    LOADERS.FILE_LOADER(),
-    LOADERS.URL_LOADER(),
-    LOADERS.JS_LOADER(),
-    // LOADERS.STYLUS_LOADER(),
-    LOADERS.SASS_LOADER(),
-    LOADERS.CSS_LOADER()
-  ]
-}
-
-webpackConfig.plugins = [
-  new webpack.DefinePlugin({
-    __IS_SERVER__: false,
-    ...config.get('webpackGlobals')
-  }),
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  new ManifestPlugin({
-    fileName: 'asset-manifest.json',
-    publicPath: webpackConfig.output.publicPath
-  }),
-  new webpack.LoaderOptionsPlugin({
-    options: {
-      context: PATHS.SRC
-    },
-    minimize: ENV.isProdLike,
-    debug: ENV.isDevelopment
-  })
-]
 
 webpackConfig.optimization = {
   runtimeChunk: false,

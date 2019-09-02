@@ -45,7 +45,7 @@ config.webpackGlobals = {
   __PROD__: config.ENV.__PROD__,
   __TRACK__: config.ENV.__TRACK__
 }
-
+config.webpackPublicPath = '/public'
 
 
 // Ensure env for babel
