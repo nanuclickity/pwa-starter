@@ -9,7 +9,9 @@ const _SASS_LOADER = (isServer = false) => ({
   loader: require.resolve('sass-loader'),
   options: {
     sourceMap: !isServer && ENV.isDevelopment,
-    includePaths: [`${PATHS.SRC}/ui-framework`]
+    sassOptions: {
+      includePaths: [`${PATHS.SRC}/ui-framework`]
+    }
   }
 })
 
@@ -52,7 +54,5 @@ module.exports = function CreateSassLoader(isServer = false) {
   if (isServer)
     //eslint-disable-line
     return LOADER_SERVER(isServer)
-  return ENV.isProdLike
-    ? LOADER_PROD(isServer)
-    : LOADER_DEV(isServer)
+  return ENV.isProdLike ? LOADER_PROD(isServer) : LOADER_DEV(isServer)
 }

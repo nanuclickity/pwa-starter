@@ -22,7 +22,6 @@ const webpackConfig = {
     path: PATHS.BUILD,
     filename: 'server.bundle.js',
     libraryTarget: 'commonjs2',
-    pathInfo: true,
     devtoolModuleFilenameTemplate: info => {
       return path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
     }
@@ -51,8 +50,8 @@ const webpackConfig = {
       LOADERS.FILE_LOADER(),
       LOADERS.URL_LOADER(),
       LOADERS.JS_LOADER(),
-      LOADERS.STYLUS_LOADER(true),
-      // LOADERS.SASS_LOADER(true),
+      // LOADERS.STYLUS_LOADER(true),
+      LOADERS.SASS_LOADER(true),
       LOADERS.CSS_LOADER(true)
     ]
   },
