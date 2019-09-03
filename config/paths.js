@@ -1,13 +1,13 @@
 const path = require('path')
-const ROOT = path.resolve(__dirname, '../')
+
+const ROOT = path.normalize(path.join(__dirname, '../')).replace(/\/$/, '')
 
 const BUILD_DIR = process.env.DIST_MODE === '1' ? 'dist' : 'build'
 
-module.exports = {
+const paths = {
   ROOT: ROOT,
 
   CONFIG_DIR: `${ROOT}/config`,
-  CONFIG_FILE: `${ROOT}/config.js`,
 
   SRC: `${ROOT}/src`,
   SRC_CLIENT: `${ROOT}/src/client`,
@@ -24,3 +24,9 @@ module.exports = {
   STYLUS_BASE: `${ROOT}/src/ui-framework/index.styl`,
   SCSS_BASE: `${ROOT}/src/ui-framework`
 }
+
+Object.keys(paths).forEach(key => {
+  paths[key] = path.normalize(paths[key])
+})
+
+module.exports = paths

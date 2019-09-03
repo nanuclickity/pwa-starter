@@ -17,21 +17,26 @@ const OVERRIDE_KEYS = [
  * @param {String} filePath path to .env file
  */
 function checkAndInject(filePath) {
-  const parsed = dotenv.parse(filePath)
-
+  const contents = fs.readFileSync(filePath, 'utf-8')
+  const parsed = dotenv.parse(contents)
+  const injected = {}
   Object.keys(parsed).forEach(key => {
     // safe to add
     if (!process.env[key]) {
       process.env[key] = parsed[key]
+      injected[key] = parsed[key]
     } else if (process.env[key] && OVERRIDE_KEYS.includes(key)) {
       debug(
         `[WARN]: Force-Overwriting '${key}' from '${filePath}' because it exists in OVERRIDE_KEYS list`
       )
       process.env[key] = parsed[key]
+      injected[key] = parsed[key]
     } else {
       debug(`[WARN]: Skipping '${key}' because already present in process.env`)
     }
   })
+
+  return injected
 }
 
 // Throw an uncaught error if config can't be read
@@ -43,7 +48,8 @@ function readConfig(filePath, config) {
 
   try {
     fs.accessSync(filePath, fs.constants.R_OK)
-    checkAndInject(filePath)
+    const injected = checkAndInject(filePath)
+    config.set(injected)
   } catch (err) {
     debug(`  Cannot read: ${filePath}`)
     debug(`
@@ -68,6 +74,6 @@ module.exports = config => {
     readConfig(`${config.PATHS.ROOT}/.env.common`, config)
     readConfig(`${config.PATHS.ROOT}/.env`, config)
   } else {
-    readConfig(`${config.PATHS.CONFIG_DIR}/.env`, config)
+    readConfig(`${config.PATHS.ROOT}/.env`, config)
   }
 }
