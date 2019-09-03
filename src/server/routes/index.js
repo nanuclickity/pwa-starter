@@ -13,7 +13,7 @@ export default function getRouter(app) {
   router.get('/ping', (req, res) => res.status(200).send('pong'))
 
   // No server rendering
-  router.get('*', handleStaticFiles, (req, res) => {
+  router.get('*', (req, res) => {
     res.render('index', getTemplateData(req))
   })
 

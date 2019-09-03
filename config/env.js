@@ -3,7 +3,9 @@
  *
  * This intends to support multiple prod-like environments
  */
-const isDevelopment = process.env.NODE_ENV === 'development'
+
+const isDevelopment =
+  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined
 const isProdLike = process.env.NODE_ENV === 'production'
 
 const isStaging = isProdLike && process.env.TRACK === 'staging'

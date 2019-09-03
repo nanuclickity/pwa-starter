@@ -75,6 +75,14 @@ const webpackConfig = {
 
   performance: {
     hints: ENV.isProdLike ? 'warning' : false
+  },
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    Buffer: false,
+    __filename: false,
+    __dirname: false
   }
 }
 

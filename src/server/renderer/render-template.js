@@ -1,8 +1,8 @@
-import { getConfigForClient } from '../config'
+import config from '../config'
 
 export const getTemplateData = req => {
   const data = {}
-  data.init_config = getConfigForClient()
+  data.init_config = config.toJSON()
   data.title = 'React APP'
   data.originalUrl = req.originalUrl
   return data
