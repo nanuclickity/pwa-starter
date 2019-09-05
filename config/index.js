@@ -1,9 +1,7 @@
 const debug = require('debug')('app:config')
 const pkg = require('../package.json')
 
-// Ensure env for babel
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
-process.env.BABEL_ENV = process.env.NODE_ENV
+console.log('setting node env', process.env.NODE_ENV)
 
 var config = {
   version: pkg.version,
@@ -50,12 +48,14 @@ config.toJSON = config.toJSON.bind(config)
 // Setting this here because it will be used in
 // both server and client configs
 config.webpackGlobals = {
-  'process.env.NODE_ENV': config.ENV.NODE_ENV,
+  'process.env': {
+    NODE_ENV: JSON.stringify(config.ENV.NODE_ENV),
+  },
   __DEV__: config.ENV.isDevelopment,
   __PROD__: config.ENV.__PROD__,
   __TRACK__: config.ENV.__TRACK__
 }
-config.webpackPublicPath = '/public'
+config.webpackPublicPath = '/public/'
 
 // Add env specific config
 Object.assign(config, require('./dotenv')(config))

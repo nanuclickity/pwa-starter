@@ -3,6 +3,7 @@ import http from 'http'
 
 import config from './config'
 import configure from './configure'
+import { readWebpackAssets } from './helpers/webpack-assets'
 
 const debug = require('debug')('app:server')
 
@@ -10,6 +11,9 @@ const app = express()
 
 const port = config.get('PORT') || process.env.PORT
 debug(`Using port ${port}`)
+
+
+readWebpackAssets(app)
 
 // Add server configuration
 configure(app)
@@ -46,7 +50,5 @@ function onListening() {
   debug('Listening on ' + bind)
 }
 
-export default app
-export function getServerInstance() {
-  return server
-}
+export function getServer() { return app }
+export function getRunningServer() { return server }

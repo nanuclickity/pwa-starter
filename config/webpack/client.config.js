@@ -1,3 +1,7 @@
+// Ensure env
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+process.env.BABEL_ENV = process.env.NODE_ENV
+
 const path = require('path')
 const webpack = require('webpack')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
@@ -103,10 +107,10 @@ if (ENV.isProdLike) {
   }
   webpackConfig.entry.vendors = ['react', 'react-dom']
   webpackConfig.plugins = [
-    new webpack.NormalModuleReplacementPlugin(
-      /\.\/getStaticRoutes/,
-      './getDynamicRoutes'
-    ),
+    // new webpack.NormalModuleReplacementPlugin(
+    //   /\.\/getStaticRoutes/,
+    //   './getDynamicRoutes'
+    // ),
     new MiniCssExtractPlugin({
       filename: `[name].[${hash}].bundle.css`,
       chunkFilename: `[name].[${hash}].chunk.[id].css`
