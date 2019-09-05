@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "analyze": "npm-run-all clean profile && webpack-bundle-analyzer stats.json build/public -s gzip",
+    "analyze": "npm-run-all clean profile && webpack-bundle-analyzer -h 0.0.0.0 stats.json build/public -s gzip",
     "build-client": "webpack --config config/webpack/client.config.js",
-    "build-prod": "NODE_ENV=production npm-run-all build gzip-size",
+    "build-prod": "DEBUG=app:* NODE_ENV=production npm-run-all build gzip-size",
     "build-server": "webpack --config config/webpack/server.config.js",
     "build": "npm-run-all clean copy build-client build-server",
     "clean": "rm -rf ./build && mkdir -p build/views build/public",
@@ -30,6 +30,9 @@
     "watch": "npm-run-all clean build-client --parallel copy-watch watch-client watch-server"
   },
   "private": true,
+  "eslintIgnore": [
+    "build/*"
+  ],
   "dependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -56,6 +59,7 @@
     "eslint-loader": "^3.0.0",
     "express": "4.17.1",
     "file-loader": "4.2.0",
+    "fs-extra": "^8.1.0",
     "gzip-size-cli": "^3.0.0",
     "history": "^4.9.0",
     "jquery": "^3.4.1",
