@@ -20,6 +20,22 @@ const { ENV, PATHS } = config
 
 const hash = ENV.isProdLike ? 'contenthash:8' : 'hash'
 
+const vendors = [
+  'react',
+  'react-dom',
+  'prop-types',
+  'classnames',
+  'redux',
+  'react-redux'
+]
+
+function createVendorsRegExp(additional = []) {
+  const v = [...vendors, ...additional]
+  const re = new RegExp(`node_modules/(${v.join('|')})`)
+
+  return re
+}
+
 const webpackConfig = {
   bail: ENV.isProdLike,
   mode: ENV.isProdLike ? 'production' : 'development',
@@ -47,7 +63,11 @@ const webpackConfig = {
   resolve: {
     modules: ['node_modules', PATHS.NODE_MODULES, PATHS.SRC_CLIENT],
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.styl'],
-    plugins: [new ModuleScopePlugin(PATHS.SRC_CLIENT)]
+    plugins: [new ModuleScopePlugin(PATHS.SRC_CLIENT)],
+    alias: {
+      react: require.resolve('react'),
+      'react-dom': require.resolve('react-dom')
+    }
   },
 
   module: {
@@ -87,11 +107,11 @@ webpackConfig.optimization = {
   runtimeChunk: false,
   splitChunks: {
     name: true,
+    chunks: 'all',
     cacheGroups: {
       vendors: {
-        test: /\/node_modules\//,
-        name: 'vendors',
-        minChunks: 3
+        test: createVendorsRegExp(),
+        name: 'vendors'
       }
     }
   }
@@ -108,7 +128,7 @@ if (ENV.isProdLike) {
     chunks: 'all',
     enforce: true
   }
-  webpackConfig.entry.vendors = ['react', 'react-dom']
+  // webpackConfig.entry.vendors = ['react', 'react-dom']
   webpackConfig.plugins = [
     // new webpack.NormalModuleReplacementPlugin(
     //   /\.\/getStaticRoutes/,

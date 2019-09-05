@@ -1,7 +1,7 @@
 const debug = require('debug')('app:config')
 const pkg = require('../package.json')
 
-console.log('setting node env', process.env.NODE_ENV)
+// console.log('setting node env', process.env.NODE_ENV)
 
 var config = {
   version: pkg.version,

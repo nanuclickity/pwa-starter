@@ -13,17 +13,17 @@ export default function getRouter(app) {
   router.get('/ping', (req, res) => res.status(200).send('pong'))
 
   // No server rendering
-  router.get('*', (req, res) => {
-    res.render('index', getTemplateData(req))
-  })
+  // router.get('*', (req, res) => {
+  //   res.render('index', getTemplateData(req))
+  // })
 
-  // Server rendering
-  // router.get(
-  //   '*',
-  //   handleStaticFiles,
-  //   handleAppShellRequest,
-  //   require('../renderer').StreamingRenderer
-  // )
+  //Server rendering
+  router.get(
+    '*',
+    // handleStaticFiles,
+    // handleAppShellRequest,
+    require('../renderer').StreamingRenderer
+  )
 
   return router
 }
