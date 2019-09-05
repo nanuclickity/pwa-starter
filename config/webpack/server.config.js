@@ -1,3 +1,7 @@
+// Ensure env
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+process.env.BABEL_ENV = process.env.NODE_ENV
+
 const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
