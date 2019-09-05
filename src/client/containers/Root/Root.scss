@@ -1,4 +1,16 @@
-html, body {
-  min-width: 100vw;
+@import 'ui';
+@import './normalize.scss';
+
+html,
+body {
+  max-width: 100vw;
   min-height: 100vh;
+
+  height: 100vh;
+
+  background-color: teal;
+}
+
+#root {
+  padding: 40px;
 }

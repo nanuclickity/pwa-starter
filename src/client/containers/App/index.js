@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 // import classnames from 'classnames'
 
 import { connect } from 'react-redux'
+import { Switch } from 'react-router-dom'
+
+import getRoutes from 'routes/index'
 
 // Overlays should be rendered aside to routes,
 // so user can always have an option to go back
@@ -11,19 +14,13 @@ import { connect } from 'react-redux'
 class App extends Component {
   static propTypes = {
     location: PropTypes.object,
-    auth: PropTypes.any,
-    routes: PropTypes.object.isRequired,
-    overlays: PropTypes.object.isRequired
+    auth: PropTypes.any
   }
 
   render() {
-    const { routes, overlays } = this.props
-    return (
-      <Fragment>
-        {routes}
-        {overlays}
-      </Fragment>
-    )
+    const { location, auth } = this.props
+    const routes = getRoutes(location, auth)
+    return <Fragment>{routes}</Fragment>
   }
 }
 

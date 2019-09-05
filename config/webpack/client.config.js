@@ -5,6 +5,9 @@ process.env.BABEL_ENV = process.env.NODE_ENV
 const path = require('path')
 const webpack = require('webpack')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
+const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware')
+const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware')
+
 const ManifestPlugin = require('webpack-manifest-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -62,7 +65,7 @@ const webpackConfig = {
 
   plugins: [
     new webpack.DefinePlugin({
-      __IS_SERVER__: false,
+      __SERVER__: false,
       ...config.get('webpackGlobals')
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -125,17 +128,23 @@ if (ENV.isProdLike) {
   ]
 } else {
   webpackConfig.plugins = [
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     ...webpackConfig.plugins
   ]
 
   webpackConfig.entry.main = [
     require.resolve('react-hot-loader/patch'),
-    // require.resolve('webpack-hot-middleware/client'),
+    // require.resolve('webpack-dev-server/client'),
+    // require.resolve('webpack/hot/dev-server'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    require.resolve('react-error-overlay'),
+    // require.resolve('react-error-overlay'),
     ...webpackConfig.entry.main
   ]
+
+  webpackConfig.resolve.alias = {
+    'react-dom': '@hot-loader/react-dom',
+    ...webpackConfig.resolve.alias
+  }
 }
 
 // Dev server specific config
@@ -146,9 +155,15 @@ webpackConfig.devServer = {
   compress: true,
   contentBase: false,
   hot: true,
-  overlay: true,
+  overlay: false,
   watchOptions: {
     ignored: /node_modules/
+  },
+  before(app, server) {
+    // This lets us fetch source contents from webpack for the error overlay
+    app.use(evalSourceMapMiddleware(server))
+    // This lets us open files from the runtime error overlay.
+    app.use(errorOverlayMiddleware())
   },
   port: config.get('DEV_SERVER_PORT'),
   host: '0.0.0.0',

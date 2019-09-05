@@ -12,7 +12,6 @@ const app = express()
 const port = config.get('PORT') || process.env.PORT
 debug(`Using port ${port}`)
 
-
 readWebpackAssets(app)
 
 // Add server configuration
@@ -50,5 +49,9 @@ function onListening() {
   debug('Listening on ' + bind)
 }
 
-export function getServer() { return app }
-export function getRunningServer() { return server }
+export function getServer() {
+  return app
+}
+export function getRunningServer() {
+  return server
+}
