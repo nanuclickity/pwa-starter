@@ -49,7 +49,7 @@ config.toJSON = config.toJSON.bind(config)
 // both server and client configs
 config.webpackGlobals = {
   'process.env': {
-    NODE_ENV: JSON.stringify(config.ENV.NODE_ENV),
+    NODE_ENV: JSON.stringify(config.ENV.NODE_ENV)
   },
   __DEV__: config.ENV.isDevelopment,
   __PROD__: config.ENV.__PROD__,

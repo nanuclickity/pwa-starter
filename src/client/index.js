@@ -1,17 +1,16 @@
 /*eslint-env browser*/
 import React from 'react'
 import { render, hydrate } from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
 
 //eslint-disable-next-line no-unused-vars
 import { configureStore, saveLocalState, loadLocalState } from './store/index'
 
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory as createHistory } from 'history'
 
 import Root from './containers/Root'
 
 //eslint-disable-next-line no-unused-vars
-import registerServiceWorker from './register-service-worker'
+// import registerServiceWorker from './register-service-worker'
 
 // Create Initial History Object
 const history = createHistory()
@@ -54,13 +53,7 @@ const renderApp = Component => {
   const renderFn = !!module.hot ? render : hydrate
   console.time('react:rendered-in')
   renderFn(
-    <AppContainer>
-      <Component
-        history={history}
-        store={store}
-        renderCounter={++renderCounter}
-      />
-    </AppContainer>,
+    <Component history={history} store={store} />,
     document.getElementById('root'),
     onRenderComplete
   )
