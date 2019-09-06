@@ -26,7 +26,7 @@ function checkAndInject(filePath) {
     if (value === 'true') {
       value = true
     } else if (value === 'false') {
-      value === false
+      value = false
     }
 
     // safe to add
