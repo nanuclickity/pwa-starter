@@ -1,1 +1,0 @@
-export function ensurePromise(promiseableFn) {}

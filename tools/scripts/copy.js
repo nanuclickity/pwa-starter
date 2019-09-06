@@ -1,6 +1,6 @@
 const Promise = require('bluebird')
 const { run } = require('./_utils')
-const PATHS = require('../paths')
+const PATHS = require('../../config/paths')
 const fs = require('fs-extra')
 
 // Add pairs of src:dest and they will be moved automatically

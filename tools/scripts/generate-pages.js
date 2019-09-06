@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { run } = require('./_utils')
 const chalk = require('chalk')
-const PATHS = require('../paths')
+const PATHS = require('../../config/paths')
 
 const Promise = require('bluebird')
 
