@@ -3,7 +3,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 //eslint-disable-next-line no-unused-vars
-import { configureStore, saveLocalState, loadLocalState } from './store/index'
+import { configureStore } from './store/index'
+import { saveState, loadState } from './store/local-state'
 
 import { createBrowserHistory as createHistory } from 'history'
 
@@ -18,12 +19,9 @@ const history = createHistory()
 // Check if server sent a dehydrated state
 const initialState = window.INITIAL_STATE || {}
 
-// Check if a localState is present
-const localState = loadLocalState() || {}
-
 // Combine the final state
 const finalState = {
-  ...localState,
+  ...loadState(),
   ...initialState
 }
 
@@ -32,7 +30,7 @@ const store = configureStore(finalState, history)
 
 // Save a local copy whenever store changes
 store.subscribe(() => {
-  saveLocalState(store.getState())
+  saveState(store.getState())
 })
 
 const onRenderComplete = () => {
@@ -68,4 +66,8 @@ if (module.hot) {
   module.hot.accept('./containers/Root', () => {
     renderApp(Root)
   })
+}
+
+if (__DEV__) {
+  localStorage.debug = 'app:*'
 }

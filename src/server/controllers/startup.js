@@ -12,7 +12,7 @@ import path from 'path'
 import Router from 'express'
 import { CachedFileResponse } from 'helpers/common'
 
-const debug = require('debug')('react-app:controllers:startup')
+const debug = require('debug')('app:controllers:startup')
 
 const SW_FILE_PATH = path.join(__dirname, './public/sw.js')
 const WORKBOX_FILE_PATH = path.join(
