@@ -3,37 +3,10 @@ import thunk from 'redux-thunk'
 import { routerMiddleware } from 'connected-react-router'
 import createRootReducer from './rootReducer'
 
-import debounce from 'lodash/debounce'
-
-// Store will use this key to check localstorage
-const LOCAL_KEY = 'react-app-state'
-
-// This is the timeout for debounced store save
-const STORE_TIMEOUT = 3000
+const debug = require('debug')('app:store')
 
 // Placeholder for redux store
 export var store
-
-const debug = require('debug')('react-app:store')
-
-function _saveLocalState(providedState = {}) {
-  localStorage.setItem(LOCAL_KEY, JSON.stringify(providedState))
-  debug('Saved Provided State: ', providedState)
-}
-
-export const saveLocalState = debounce(_saveLocalState, STORE_TIMEOUT, {
-  trailing: true
-})
-
-export function loadLocalState() {
-  var json = {}
-  try {
-    json = JSON.parse(localStorage.getItem(LOCAL_KEY))
-  } catch (err) {
-    throw err
-  }
-  return json
-}
 
 export function configureStore(initialState = {}, history) {
   // Include all middlewares here

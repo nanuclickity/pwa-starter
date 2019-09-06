@@ -6,11 +6,10 @@ import { ConnectedRouter } from 'connected-react-router'
 import App from '../App'
 import './Root.scss'
 
-const RootContainer = ({ store, history, routes, overlays, location }) => (
+const RootContainer = ({ store, history }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <App />
-      {/* <Switch location={location}>{overlays}</Switch> */}
     </ConnectedRouter>
   </Provider>
 )

@@ -4,7 +4,7 @@
 //   return !navigator.serviceWorker.controller
 // }
 
-const debug = require('debug')('react-app:register-sw')
+const debug = require('debug')('app:register-sw')
 
 function onServiceWorkerUpdate(registration) {
   console.log('service worker found update')
