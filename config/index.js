@@ -49,15 +49,34 @@ config.toJSON = config.toJSON.bind(config)
 // both server and client configs
 config.webpackGlobals = {
   'process.env': {
-    NODE_ENV: JSON.stringify(config.ENV.NODE_ENV)
+    NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    BABEL_ENV: JSON.stringify(process.env.BABEL_ENV),
+    DEBUG: JSON.stringify(process.env.DEBUG)
   },
   __DEV__: config.ENV.isDevelopment,
-  __PROD__: config.ENV.__PROD__,
-  __TRACK__: config.ENV.__TRACK__
+  __PROD__: config.ENV.isProdLike,
+  __TRACK__: config.ENV.TRACK
 }
 config.webpackPublicPath = '/public/'
 
 // Add env specific config
 Object.assign(config, require('./dotenv')(config))
+
+function injectOriginalEnv() {
+  return Object.keys(process.env).reduce((acc, k) => {
+    const v = process.env[k]
+    if (typeof v === 'string') {
+      acc[k] = JSON.stringify(v)
+    } else if (typeof v === 'number') {
+      acc[k] = v.toString()
+    } else if (typeof v === 'boolean') {
+      acc[k] = v.toString()
+    } else if (v === null) {
+      acc[k] = 'null'
+    }
+
+    return acc
+  }, {})
+}
 
 module.exports = config

@@ -21,16 +21,24 @@ function checkAndInject(filePath) {
   const parsed = dotenv.parse(contents)
   const injected = {}
   Object.keys(parsed).forEach(key => {
+    let value = parsed[key]
+
+    if (value === 'true') {
+      value = true
+    } else if (value === 'false') {
+      value === false
+    }
+
     // safe to add
     if (!process.env[key]) {
-      process.env[key] = parsed[key]
-      injected[key] = parsed[key]
+      process.env[key] = value
+      injected[key] = value
     } else if (process.env[key] && OVERRIDE_KEYS.includes(key)) {
       debug(
         `[WARN]: Force-Overwriting '${key}' from '${filePath}' because it exists in OVERRIDE_KEYS list`
       )
-      process.env[key] = parsed[key]
-      injected[key] = parsed[key]
+      process.env[key] = value
+      injected[key] = value
     } else {
       debug(`[WARN]: Skipping '${key}' because already present in process.env`)
     }

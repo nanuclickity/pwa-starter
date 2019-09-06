@@ -21,8 +21,9 @@ const { ENV, PATHS } = config
 const hash = ENV.isProdLike ? 'contenthash:8' : 'hash'
 
 const vendors = [
-  'react',
   'react-dom',
+  'react',
+  'scheduler',
   'prop-types',
   'classnames',
   'redux',
@@ -62,7 +63,15 @@ const webpackConfig = {
 
   resolve: {
     modules: ['node_modules', PATHS.NODE_MODULES, PATHS.SRC_CLIENT],
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.styl'],
+    extensions: [
+      '.web.js',
+      '.js',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+      '.styl',
+      '.scss'
+    ],
     plugins: [new ModuleScopePlugin(PATHS.SRC_CLIENT)],
     alias: {
       react: require.resolve('react'),
@@ -107,11 +116,11 @@ webpackConfig.optimization = {
   runtimeChunk: false,
   splitChunks: {
     name: true,
-    chunks: 'all',
     cacheGroups: {
       vendors: {
         test: createVendorsRegExp(),
-        name: 'vendors'
+        name: 'vendors',
+        enforce: true
       }
     }
   }
@@ -122,12 +131,21 @@ webpackConfig.performance = {
 }
 
 if (ENV.isProdLike) {
-  webpackConfig.optimization.splitChunks.cacheGroups.styles = {
-    name: 'styles',
-    test: /\.css$/,
+  webpackConfig.optimization.splitChunks = {
+    ...webpackConfig.optimization.splitChunks,
     chunks: 'all',
-    enforce: true
+    name: false,
+    cacheGroups: {
+      ...webpackConfig.optimization.splitChunks.cacheGroups,
+      styles: {
+        name: 'styles',
+        test: /\.css$/,
+        chunks: 'all',
+        enforce: true
+      }
+    }
   }
+
   // webpackConfig.entry.vendors = ['react', 'react-dom']
   webpackConfig.plugins = [
     // new webpack.NormalModuleReplacementPlugin(
@@ -147,11 +165,7 @@ if (ENV.isProdLike) {
     ...webpackConfig.plugins
   ]
 } else {
-  webpackConfig.plugins = [
-    // new webpack.HotModuleReplacementPlugin(),
-    ...webpackConfig.plugins
-  ]
-
+  // webpackConfig.entry.vendors = vendors
   webpackConfig.entry.main = [
     require.resolve('react-hot-loader/patch'),
     // require.resolve('webpack-dev-server/client'),
@@ -160,11 +174,10 @@ if (ENV.isProdLike) {
     // require.resolve('react-error-overlay'),
     ...webpackConfig.entry.main
   ]
-
-  webpackConfig.resolve.alias = {
-    'react-dom': '@hot-loader/react-dom',
-    ...webpackConfig.resolve.alias
+  webpackConfig.optimization.splitChunks.cacheGroups.default = {
+    reuseExistingChunk: true
   }
+  webpackConfig.resolve.alias['react-dom'] = '@hot-loader/react-dom'
 }
 
 // Dev server specific config

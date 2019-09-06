@@ -5,10 +5,10 @@ import crypto from 'crypto'
 import purify from 'purify-css'
 import Promise from 'bluebird'
 
-// import { Config } from '../config'
+import config from '../config'
 
-const debug = require('debug')('react-app:renderer:critical-css')
-const debugCSSCache = require('debug')('react-app:renderer:css-cache')
+const debug = require('debug')('app:renderer:critical-css')
+const debugCSSCache = require('debug')('app:renderer:css-cache')
 
 const cssBundlePath = path.join(__dirname + '/server.bundle.css')
 
@@ -37,7 +37,7 @@ const createKeyFromReq = req => {
  * @param {String} str
  */
 const getKBSizeFromStringLength = str => {
-  return Buffer.byteLength(str, 'utf8') / 1000
+  return Buffer.byteLength(str, 'utf8') / 1024
 }
 
 /**
@@ -100,7 +100,9 @@ export default function getCriticalCSS(context, options = {}) {
   const key = createKeyFromReq(context.req)
   const css = CSS_CACHE[key]
 
-  const { generate = true } = options
+  // const { generate = true } = options
+
+  const shouldGenerate = options.generate && config.get('ENABLE_CRITICAL_CSS')
 
   var resultPromise = Promise.resolve('')
 
@@ -110,7 +112,7 @@ export default function getCriticalCSS(context, options = {}) {
     resultPromise = Promise.resolve(css)
   }
 
-  if (generate) {
+  if (shouldGenerate) {
     debug('Generating fresh...')
     resultPromise = context.streamingRender
       ? generateCriticalCSSFromStream(context.renderStream)
@@ -120,7 +122,7 @@ export default function getCriticalCSS(context, options = {}) {
   return resultPromise
     .then(criticalCSS => {
       // Insert the new css in cache
-      if (generate) {
+      if (shouldGenerate) {
         CSS_CACHE[key] = criticalCSS
         debug('Generated critical css')
       }

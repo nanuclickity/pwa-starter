@@ -26,9 +26,9 @@ mixin lazy_scripts()
 
 block preload
   if is_prod
-    link(rel='preload' as='style'  href= webpack_assets['main.css'])
-    link(rel='preload' as='script' href= webpack_assets['vendors.js'])
-    link(rel='preload' as='script' href= webpack_assets['main.js'])
+    link(rel='prefetch' as='style'  href= webpack_assets['main.css'])
+    link(rel='prefetch' as='script' href= webpack_assets['vendors.js'])
+    link(rel='prefetch' as='script' href= webpack_assets['main.js'])
 
 block head_styles
   style(id='server-css' type='text/css' rel='stylesheet') __inject_critical_css__
@@ -42,9 +42,11 @@ block head_scripts
 
 block content
   +lazy_scripts()
-  section#root __inject_html__
 
-  if is_prod
-    script(defer type='text/javascript' src= webpack_assets['vendors.js'])
-
+  if init_config.PAGE_RENDERING_METHOD !== 'CLIENT'
+    section#root __inject_html__
+  else
+    section#root
+  
+  script(defer type='text/javascript' src= webpack_assets['vendors.js'])
   script(defer type='text/javascript' src= webpack_assets['main.js'])

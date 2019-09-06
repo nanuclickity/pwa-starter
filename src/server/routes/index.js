@@ -1,5 +1,7 @@
 import { Router } from 'express'
-import { getTemplateData } from '../renderer/render-template' // eslint-disable-line no-unused-vars
+// import { getTemplateData } from '../renderer/render-template' // eslint-disable-line no-unused-vars
+
+import Renderer from '../renderer'
 
 const router = Router()
 
@@ -18,12 +20,7 @@ export default function getRouter(app) {
   // })
 
   //Server rendering
-  router.get(
-    '*',
-    // handleStaticFiles,
-    // handleAppShellRequest,
-    require('../renderer').StreamingRenderer
-  )
+  router.get('*', Renderer)
 
   return router
 }

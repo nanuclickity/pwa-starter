@@ -10,8 +10,8 @@ const debug = require('debug')('app:server')
 const app = express()
 
 const port = config.get('PORT') || process.env.PORT
-debug(`Using port ${port}`)
 
+// Reads webpack asset-manifest to add prefetch headers
 readWebpackAssets(app)
 
 // Add server configuration
