@@ -2,7 +2,7 @@ const Promise = require('bluebird') //eslint-disable-line
 const fs = Promise.promisifyAll(require('fs-extra'))
 const { run } = require('./_utils') //eslint-disable-line
 const gzipSize = require('gzip-size')
-const PATHS = require('../paths')
+const PATHS = require('../../config/paths')
 const Table = require('easy-table')
 const chalk = require('chalk')
 

@@ -1,5 +1,5 @@
 const { run } = require('./_utils')
-const PATHS = require('../paths')
+const PATHS = require('../../config/paths')
 
 module.exports = function CleanTask(done) {
   var cmd = `rm -rf ${PATHS.BUILD}/*`
