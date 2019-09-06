@@ -51,9 +51,7 @@ const renderApp = Component => {
   const renderFn = !!module.hot ? ReactDOM.render : ReactDOM.hydrate
   console.time('react:rendered-in')
   renderFn(
-    <React.StrictMode>
-      <Component history={history} store={store} />
-    </React.StrictMode>,
+    <Component history={history} store={store} />,
     document.getElementById('root'),
     onRenderComplete
   )
