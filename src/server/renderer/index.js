@@ -8,15 +8,15 @@
  * 5. Render react with data
  */
 
-// import { Config } from '../config'
+import config from '../config'
 import Promise from 'bluebird'
 import createStore from './create-store'
 import fetchData from './fetch-data'
 import getCriticalCSS from './get-critical-css'
-import renderTemplate from './render-template'
+import renderTemplate, { getTemplateData } from './render-template'
 import renderPage from './render-page'
 
-const debug = require('debug')('react-app:renderer')
+const debug = require('debug')('app:renderer')
 
 export function StreamingRenderer(req, res, next) {
   const context = { req, res, next }
@@ -72,7 +72,7 @@ export function StreamingRenderer(req, res, next) {
     })
 }
 
-export default function Renderer(req, res, next) {
+export function StaticRenderer(req, res, next) {
   const context = { req, res, next }
   console.time('renderCompletionTime')
   debug('Attempting render of ' + req.originalUrl)
@@ -114,4 +114,25 @@ export default function Renderer(req, res, next) {
     .catch(err => {
       next(err)
     })
+}
+
+export function ClientRenderer(req, res, next) {
+  return res.render('index', getTemplateData(req))
+}
+
+export function withServiceWorker(req, res, next) {}
+
+export default function GetRenderer(req, res, next) {
+  const pageRenderingMap = {
+    STREAM: StreamingRenderer,
+    STATIC: StaticRenderer,
+    CLIENT: ClientRenderer
+  }
+
+  const method = config.get('PAGE_RENDERING_METHOD') || 'CLIENT'
+  const renderFn = pageRenderingMap[method]
+
+  debug(`Will use '${method}' rendering method`)
+
+  return renderFn(req, res, next)
 }

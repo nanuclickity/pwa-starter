@@ -1,10 +1,13 @@
 import config from '../config'
 
+const debug = require('debug')('app:render-template')
+
 export const getTemplateData = req => {
   const data = {}
   data.init_config = config.toJSON()
   data.title = 'React APP'
   data.originalUrl = req.originalUrl
+  debug(`Generated template data`)
   return data
 }
 
@@ -21,6 +24,8 @@ export default function generateTemplate(context) {
       context.templateBeforeCSS = before_css
       context.templateBeforeApp = before_app
       context.templateAfterApp = after_app
+
+      debug(`Generated template`)
       resolve(context)
     })
   })

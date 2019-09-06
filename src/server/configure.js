@@ -56,6 +56,9 @@ export default function configure(app) {
     res.locals.error_message = err.message
     res.locals.error = config.ENV.isDevelopment ? err : {}
 
+    // Show error in logs
+    console.log(err)
+
     // render the error page
     res.status(err.status || 500)
     res.render('error')
