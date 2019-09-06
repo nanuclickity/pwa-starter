@@ -1,6 +1,6 @@
 /*eslint-env browser*/
 import React from 'react'
-import { render, hydrate } from 'react-dom'
+import ReactDOM from 'react-dom'
 
 //eslint-disable-next-line no-unused-vars
 import { configureStore, saveLocalState, loadLocalState } from './store/index'
@@ -50,10 +50,12 @@ const onRenderComplete = () => {
 
 var renderCounter = 0
 const renderApp = Component => {
-  const renderFn = !!module.hot ? render : hydrate
+  const renderFn = !!module.hot ? ReactDOM.render : ReactDOM.hydrate
   console.time('react:rendered-in')
   renderFn(
-    <Component history={history} store={store} />,
+    <React.StrictMode>
+      <Component history={history} store={store} />
+    </React.StrictMode>,
     document.getElementById('root'),
     onRenderComplete
   )
