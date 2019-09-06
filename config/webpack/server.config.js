@@ -17,7 +17,7 @@ const { ENV, PATHS } = config
 const webpackConfig = {
   mode: ENV.isProdLike ? 'production' : 'development',
   target: 'node',
-  devtool: false,
+  devtool: ENV.isDevelopment ? 'cheap-module-source-map' : 'source-map',
   cache: ENV.isDevelopment,
   context: PATHS.SRC,
 
@@ -65,12 +65,15 @@ const webpackConfig = {
       __SERVER__: true,
       ...config.get('webpackGlobals')
     }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new MiniCssExtractPlugin({
       filename: 'server.bundle.css'
     }),
     new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.optimize\.css$/g,
+      assetNameRegExp: /\.css$/g,
       cssProcessor: require('cssnano'),
       cssProcessorOptions: { discardComments: { removeAll: true } },
       canPrint: true
