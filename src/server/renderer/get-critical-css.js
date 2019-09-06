@@ -60,7 +60,7 @@ const reportCSSCacheStatistics = () => {
  * @param {String} html result of `renderToString`
  */
 export const generateCriticalCSS = html => {
-  const options = { minify: process.env.NODE_ENV === 'production' }
+  const options = { minify: config.get('MINIFY_CRITICAL_CSS') }
   return new Promise((resolve, reject) => {
     debug('Purifying')
     purify(html, allCss, options, function(purifiedCss) {
@@ -102,8 +102,11 @@ export default function getCriticalCSS(context, options = {}) {
 
   // const { generate = true } = options
 
-  const shouldGenerate = options.generate && config.get('ENABLE_CRITICAL_CSS')
+  if (options.generate === undefined) {
+    options.generate = true
+  }
 
+  const shouldGenerate = options.generate && config.get('ENABLE_CRITICAL_CSS')
   var resultPromise = Promise.resolve('')
 
   // If a cache is found, resolve immediately

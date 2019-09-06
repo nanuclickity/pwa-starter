@@ -6,9 +6,10 @@ import NotFound from './NotFound'
 
 const About = React.lazy(() => import('./About'))
 
+// Doesn't break SSR
 const SafeSuspense = ({ children, fallback }) =>
   __SERVER__ ? (
-    children
+    fallback
   ) : (
     <React.Suspense fallback={fallback}>{children}</React.Suspense>
   )
