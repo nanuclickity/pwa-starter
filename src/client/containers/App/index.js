@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 // import classnames from 'classnames'
 
 import { connect } from 'react-redux'
-import { Switch } from 'react-router-dom'
+import Header from 'components/Header'
 
 import getRoutes from 'routes/index'
 
@@ -20,7 +20,12 @@ class App extends Component {
   render() {
     const { location, auth } = this.props
     const routes = getRoutes(location, auth)
-    return <Fragment>{routes}</Fragment>
+    return (
+      <Fragment>
+        <Header />
+        {routes}
+      </Fragment>
+    )
   }
 }
 
