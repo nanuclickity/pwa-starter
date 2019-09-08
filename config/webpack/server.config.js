@@ -38,7 +38,7 @@ const webpackConfig = {
       PATHS.SRC_CLIENT,
       PATHS.SRC_SERVER
     ],
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.scss'],
     plugins: [
       // Prevents importing files outside src
       new ModuleScopePlugin(PATHS.SRC_CLIENT)
