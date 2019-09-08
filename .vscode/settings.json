@@ -5,14 +5,17 @@
   "editor.formatOnPaste": false,
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
-  "npm-intellisense.importES6": true,
+  "scss.validate": true,
+  "scss.implicitlyLabel": "from",
+  "scss.scannerExclude": ["**/.git", "**/node_modules", "**/bower_components"],
   "search.exclude": {
     "**/node_modules/*/**": true
   },
   "files.exclude": {
     "**/node_modules/*/**": true,
-    "build/": true,
-    "dist/": true,
+    "**/node_modules/bootstrap/scss": false,
+    "**/build": true,
+    "**/dist": true,
     "package-lock.json": true
   },
   "files.watcherExclude": {
