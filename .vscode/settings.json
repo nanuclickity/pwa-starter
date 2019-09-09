@@ -6,8 +6,17 @@
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
   "scss.validate": true,
+  "path-autocomplete.pathMappings": {
+    "~bootstrap": "${folder}/node_modules/bootstrap",
+    "scss": "${folder}src/client/scss"
+  },
   "scss.implicitlyLabel": "from",
-  "scss.scannerExclude": ["**/.git", "**/node_modules", "**/bower_components"],
+  "scss.scannerExclude": [
+    "**/.git",
+    "**/node_modules/!(bootstrap)",
+    "**/bower_components",
+    "**/src/(server|public)"
+  ],
   "search.exclude": {
     "**/node_modules/*/**": true
   },

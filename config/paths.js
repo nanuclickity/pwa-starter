@@ -21,8 +21,7 @@ const paths = {
 
   NODE_MODULES: `${ROOT}/node_modules`,
 
-  STYLUS_BASE: `${ROOT}/src/ui-framework/index.styl`,
-  SCSS_BASE: `${ROOT}/src/ui-framework`
+  SCSS_BASE: `${ROOT}/src/client/scss`
 }
 
 Object.keys(paths).forEach(key => {

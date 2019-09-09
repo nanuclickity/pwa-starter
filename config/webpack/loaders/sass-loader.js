@@ -10,7 +10,7 @@ const _SASS_LOADER = (isServer = false) => ({
   options: {
     sourceMap: !isServer && ENV.isDevelopment,
     sassOptions: {
-      includePaths: [`${PATHS.SRC}/ui-framework`]
+      includePaths: [PATHS.SCSS_BASE]
     }
   }
 })
