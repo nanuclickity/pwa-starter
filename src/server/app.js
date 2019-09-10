@@ -1,5 +1,8 @@
+import fs from 'fs'
+import path from 'path'
 import express from 'express'
 import http from 'http'
+import https from 'https'
 
 import config from './config'
 import configure from './configure'
@@ -17,11 +20,27 @@ readWebpackAssets(app)
 // Add server configuration
 configure(app)
 
+const httpsOptions = {
+  certPath: path.resolve(config.get('HTTPS_CERT')),
+  certKeyPath: path.resolve(config.get('HTTPS_CERT_KEY'))
+}
+
 // Start server
 const server = http.createServer(app)
 server.listen(port)
 server.on('error', onServerError)
 server.on('listening', onListening)
+
+const httpsServer = https.createServer(
+  {
+    key: fs.readFileSync(httpsOptions.certKeyPath),
+    cert: fs.readFileSync(httpsOptions.certPath)
+  },
+  app
+)
+httpsServer.listen(443)
+httpsServer.on('error', onServerError)
+httpsServer.on('listening', onListening)
 
 function onServerError(error) {
   if (error.syscall !== 'listen') {
