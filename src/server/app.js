@@ -31,16 +31,18 @@ server.listen(port)
 server.on('error', onServerError)
 server.on('listening', onListening)
 
-const httpsServer = https.createServer(
-  {
-    key: fs.readFileSync(httpsOptions.certKeyPath),
-    cert: fs.readFileSync(httpsOptions.certPath)
-  },
-  app
-)
-httpsServer.listen(443)
-httpsServer.on('error', onServerError)
-httpsServer.on('listening', onListening)
+if (config.get('ENABLE_HTTPS')) {
+  const httpsServer = https.createServer(
+    {
+      key: fs.readFileSync(httpsOptions.certKeyPath),
+      cert: fs.readFileSync(httpsOptions.certPath)
+    },
+    app
+  )
+  httpsServer.listen(443)
+  httpsServer.on('error', onServerError)
+  httpsServer.on('listening', onListening)
+}
 
 function onServerError(error) {
   if (error.syscall !== 'listen') {
