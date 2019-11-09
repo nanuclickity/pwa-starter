@@ -43,10 +43,7 @@ export function StreamingRenderer(req, res, next) {
     .then(renderPage)
     .then(() => {
       const stream = context.html
-      stream.pipe(
-        res,
-        { end: false }
-      )
+      stream.pipe(res, { end: false })
       stream.on('end', () => {
         debug('Sent react app')
         res.write(context.templateAfterApp)

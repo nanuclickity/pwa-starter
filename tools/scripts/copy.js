@@ -25,5 +25,8 @@ module.exports = function copyTask(cb) {
     commands.push(`cp -r ${srcPath} ${ASSETS[srcPath]}`)
   })
 
-  return Promise.mapSeries(commands.filter(x => !!x), run)
+  return Promise.mapSeries(
+    commands.filter(x => !!x),
+    run
+  )
 }
