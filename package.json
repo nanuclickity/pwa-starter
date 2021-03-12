@@ -79,7 +79,7 @@
     "pug": "2.0.4",
     "purify-css": "^1.2.5",
     "react": "16.11.0",
-    "react-dev-utils": "9.1.0",
+    "react-dev-utils": "11.0.4",
     "react-dom": "16.11.0",
     "react-hot-loader": "4.12.16",
     "react-redux": "^7.1.3",
