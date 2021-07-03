@@ -8,9 +8,9 @@ module.exports = function CreateESLintLoader() {
     use: [
       {
         options: { formatter: eslintFormatter },
-        loader: require.resolve('eslint-loader')
-      }
+        loader: require.resolve('eslint-loader'),
+      },
     ],
-    include: PATHS.SRC
+    include: PATHS.SRC,
   }
 }

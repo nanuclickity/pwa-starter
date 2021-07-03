@@ -2,7 +2,7 @@ import config from '../config'
 
 const debug = require('debug')('app:render-template')
 
-export const getTemplateData = req => {
+export const getTemplateData = (req) => {
   const data = {}
   data.init_config = config.toJSON()
   data.title = 'React APP'

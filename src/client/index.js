@@ -22,7 +22,7 @@ const initialState = window.INITIAL_STATE || {}
 // Combine the final state
 const finalState = {
   ...loadState(),
-  ...initialState
+  ...initialState,
 }
 
 // Initialize our store
@@ -47,7 +47,7 @@ const onRenderComplete = () => {
 }
 
 var renderCounter = 0
-const renderApp = Component => {
+const renderApp = (Component) => {
   const renderFn = !!module.hot ? ReactDOM.render : ReactDOM.hydrate
   console.time('react:rendered-in')
   renderFn(

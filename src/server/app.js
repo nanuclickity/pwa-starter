@@ -22,7 +22,7 @@ configure(app)
 
 const httpsOptions = {
   certPath: path.resolve(config.get('HTTPS_CERT')),
-  certKeyPath: path.resolve(config.get('HTTPS_CERT_KEY'))
+  certKeyPath: path.resolve(config.get('HTTPS_CERT_KEY')),
 }
 
 // Start server
@@ -35,7 +35,7 @@ if (config.get('ENABLE_HTTPS')) {
   const httpsServer = https.createServer(
     {
       key: fs.readFileSync(httpsOptions.certKeyPath),
-      cert: fs.readFileSync(httpsOptions.certPath)
+      cert: fs.readFileSync(httpsOptions.certPath),
     },
     app
   )

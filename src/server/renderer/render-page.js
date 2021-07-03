@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import Root from '../../client/containers/Root'
 
-const generateHTML = context => {
+const generateHTML = (context) => {
   const renderContext = {}
 
   const renderFn = context.streamingRender

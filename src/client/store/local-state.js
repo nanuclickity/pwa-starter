@@ -42,7 +42,7 @@ const Storage = {
       console.info(`Unable to load data from local storage: ${err.message}`)
       throw err
     }
-  }
+  },
 }
 
 export function loadState() {
@@ -50,5 +50,5 @@ export function loadState() {
 }
 
 export const saveState = debounce(Storage.save, SAVE_INTERVAL, {
-  trailing: true
+  trailing: true,
 })

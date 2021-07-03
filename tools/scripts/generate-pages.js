@@ -14,7 +14,7 @@ const SERVER_PATH = `${PATHS.BUILD}/server.bundle.js`
 const WITH_SERVER = process.argv.includes('--with-server')
 
 const ReadAppRoutes = () => {
-  return run(`cat ${APPROUTES_PATH}`).then(result => result.stdout)
+  return run(`cat ${APPROUTES_PATH}`).then((result) => result.stdout)
 }
 
 function GetRoutesToRender(routesBuffer) {
@@ -24,7 +24,7 @@ function GetRoutesToRender(routesBuffer) {
     return Promise.reject(new Error(`Cannot read paths from ${APPROUTES_PATH}`))
 
   const matches = routesBuffer.match(pathRegex)
-  const cleaned = matches.map(x => x.replace('path=', '').replace(/"/g, ''))
+  const cleaned = matches.map((x) => x.replace('path=', '').replace(/"/g, ''))
 
   console.log(chalk.green(`Found Routes...`))
   console.log(chalk.yellow(cleaned.join('\n')))
@@ -42,7 +42,7 @@ function StartBuildServer(routesToRender = []) {
 function CloseServer(server) {
   const instance = server.getServerInstance()
   return new Promise((resolve, reject) => {
-    instance.close(function() {
+    instance.close(function () {
       console.log(chalk.green(`Closed server`))
       resolve()
     })
@@ -78,7 +78,7 @@ function GeneratePages() {
     .then(() => {
       console.log(chalk.green(`Routes Rendered`))
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(chalk.red(`GeneratePages errored out`))
       console.error(err)
       return null

@@ -16,13 +16,10 @@ export function configureStore(initialState = {}, history) {
   const devTools =
     !__SERVER__ && window.__REDUX_DEVTOOLS_EXTENSION__
       ? window.__REDUX_DEVTOOLS_EXTENSION__()
-      : f => f
+      : (f) => f
 
   // Composed store enhancer
-  const composed = compose(
-    applyMiddleware(...middlewares),
-    devTools
-  )
+  const composed = compose(applyMiddleware(...middlewares), devTools)
 
   // Create the store
   store = createStore(createRootReducer(history), initialState, composed)

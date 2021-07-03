@@ -17,5 +17,5 @@ module.exports = {
   isStaging,
   isProduction,
   TRACK: process.env.TRACK,
-  NODE_ENV: process.env.NODE_ENV
+  NODE_ENV: process.env.NODE_ENV,
 }

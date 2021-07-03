@@ -21,5 +21,5 @@ export default class NotFoundPage extends PureComponent {
 }
 
 NotFoundPage.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
 }

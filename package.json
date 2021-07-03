@@ -57,7 +57,7 @@
     "cssnano": "^5.0.6",
     "dotenv": "^10.0.0",
     "easy-table": "^1.1.1",
-    "eslint-loader": "^3.0.2",
+    "eslint-loader": "^3.0.4",
     "express": "4.17.1",
     "file-loader": "6.2.0",
     "fs-extra": "^10.0.0",

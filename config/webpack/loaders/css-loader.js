@@ -31,9 +31,9 @@ const _CSS_LOADER = (isServer = false) => ({
       mode: 'global',
       localIdentName: ENV.isProdLike
         ? '[hash:base64:4]'
-        : '[name]_[local]_[hash:base64:3]'
-    }
-  }
+        : '[name]_[local]_[hash:base64:3]',
+    },
+  },
 })
 
 const _POSTCSS_LOADER = (isServer = false) => ({
@@ -43,17 +43,17 @@ const _POSTCSS_LOADER = (isServer = false) => ({
       require('postcss-flexbugs-fixes'),
       autoprefixer({
         //browsers: ['> 3%', 'last 4 versions', 'iOS 7'],
-        flexbox: 'no-2009'
-      })
+        flexbox: 'no-2009',
+      }),
     ],
-    sourceMap: ENV.isDevelopment && !isServer
-  }
+    sourceMap: ENV.isDevelopment && !isServer,
+  },
 })
 
 function CreateCSSLoader(isServer = false) {
   const config = {
     test: /\.css$/,
-    use: [require.resolve('style-loader'), _CSS_LOADER(isServer)]
+    use: [require.resolve('style-loader'), _CSS_LOADER(isServer)],
   }
 
   if (!isServer) {
@@ -66,5 +66,5 @@ function CreateCSSLoader(isServer = false) {
 module.exports = {
   CreateCSSLoader: CreateCSSLoader,
   _POSTCSS_LOADER: _POSTCSS_LOADER,
-  _CSS_LOADER: _CSS_LOADER
+  _CSS_LOADER: _CSS_LOADER,
 }

@@ -16,5 +16,5 @@ export default function Sidebar({ className }) {
 }
 
 Sidebar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 }

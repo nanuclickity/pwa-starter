@@ -2,13 +2,13 @@ module.exports = {
   // this is a simple selector to the element that says 'Error'
   'pretty-error > header > title > kind': {
     // which we can hide:
-    display: 'none'
+    display: 'none',
   },
 
   // the 'colon' after 'Error':
   'pretty-error > header > colon': {
     // we hide that too:
-    display: 'none'
+    display: 'none',
   },
 
   // our error message
@@ -24,32 +24,32 @@ module.exports = {
     background: 'red',
 
     // it understands paddings too!
-    padding: '0 1' // top/bottom left/right
+    padding: '0 1', // top/bottom left/right
   },
 
   // each trace item ...
   'pretty-error > trace > item': {
     marginLeft: 3,
-    bullet: '"<grey>o</grey>"'
+    bullet: '"<grey>o</grey>"',
   },
 
   'pretty-error > trace > item > header > pointer > file': {
-    color: 'bright-red'
+    color: 'bright-red',
   },
 
   'pretty-error > trace > item > header > pointer > colon': {
-    color: 'cyan'
+    color: 'cyan',
   },
 
   'pretty-error > trace > item > header > pointer > line': {
-    color: 'bright-cyan'
+    color: 'bright-cyan',
   },
 
   'pretty-error > trace > item > header > what': {
-    color: 'bright-white'
+    color: 'bright-white',
   },
 
   'pretty-error > trace > item > footer > addr': {
-    color: 'grey'
-  }
+    color: 'grey',
+  },
 }

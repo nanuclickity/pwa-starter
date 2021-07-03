@@ -29,8 +29,8 @@ export function StreamingRenderer(req, res, next) {
   // Start rendering
   Promise.resolve(context)
     .then(renderTemplate)
-    .then(context => getCriticalCSS(context, { generate: false }))
-    .then(context => {
+    .then((context) => getCriticalCSS(context, { generate: false }))
+    .then((context) => {
       // TTFB
       res.write(context.templateBeforeCSS)
       res.write(context.criticalCSS)
@@ -43,10 +43,7 @@ export function StreamingRenderer(req, res, next) {
     .then(renderPage)
     .then(() => {
       const stream = context.html
-      stream.pipe(
-        res,
-        { end: false }
-      )
+      stream.pipe(res, { end: false })
       stream.on('end', () => {
         debug('Sent react app')
         res.write(context.templateAfterApp)
@@ -66,7 +63,7 @@ export function StreamingRenderer(req, res, next) {
       debug('Success')
       console.timeEnd('renderCompletionTime')
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err)
       next(err)
     })
@@ -89,7 +86,7 @@ export function StaticRenderer(req, res, next) {
     .tap(() => debug('Rendererd react'))
     .then(getCriticalCSS)
     .tap(() => debug('Extracted critical css'))
-    .then(context => {
+    .then((context) => {
       // If a redirect was found
       if (context.renderContext.url) {
         debug('Redirect was found to : ' + context.renderContext.url)
@@ -111,7 +108,7 @@ export function StaticRenderer(req, res, next) {
 
       return true
     })
-    .catch(err => {
+    .catch((err) => {
       next(err)
     })
 }
@@ -126,7 +123,7 @@ export default function GetRenderer(req, res, next) {
   const pageRenderingMap = {
     STREAM: StreamingRenderer,
     STATIC: StaticRenderer,
-    CLIENT: ClientRenderer
+    CLIENT: ClientRenderer,
   }
 
   const method = config.get('PAGE_RENDERING_METHOD') || 'CLIENT'

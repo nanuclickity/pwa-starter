@@ -8,17 +8,17 @@ const debug = require('debug')('app:api:base')
 const api = create({
   baseURL: getConfig('API_BASE'),
   headers: {
-    Accept: 'application/json'
-  }
+    Accept: 'application/json',
+  },
 })
 
-const rejectIfResponseNotOK = response => {
+const rejectIfResponseNotOK = (response) => {
   return response.ok
     ? Promise.resolve(response)
     : Promise.reject(new Error(response.data.message))
 }
 
-export const formAPI = function(createRequestPromise) {
+export const formAPI = function (createRequestPromise) {
   if (typeof createRequestPromise !== 'function') {
     throw new Error('Callback should be a function')
   }
@@ -35,13 +35,13 @@ export const formAPI = function(createRequestPromise) {
   debug('Loader Start')
   return Promise.resolve(api)
     .then(createRequestPromise)
-    .then(response => {
+    .then((response) => {
       debug('Loader stop')
       return rejectIfResponseNotOK(response)
     })
 }
 
-export const jsonAPI = function(createRequestPromise) {
+export const jsonAPI = function (createRequestPromise) {
   if (typeof createRequestPromise !== 'function') {
     throw new Error('Callback should be a function')
   }
@@ -56,7 +56,7 @@ export const jsonAPI = function(createRequestPromise) {
   debug('Loader start')
   return Promise.resolve(api)
     .then(createRequestPromise)
-    .then(response => {
+    .then((response) => {
       debug('Loader stop')
       return rejectIfResponseNotOK(response)
     })
@@ -122,11 +122,11 @@ export const DispatchAPI = (dispatchFn, promiseFn, options = {}) => {
   }
 
   return promise
-    .then(response => {
+    .then((response) => {
       dispatchFn(options.success(response))
       return Promise.resolve(response)
     })
-    .catch(err => {
+    .catch((err) => {
       dispatchFn(options.failure(err))
       return Promise.reject(err)
     })

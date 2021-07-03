@@ -26,9 +26,9 @@ const webpackConfig = {
     path: PATHS.BUILD,
     filename: 'server.bundle.js',
     libraryTarget: 'commonjs2',
-    devtoolModuleFilenameTemplate: info => {
+    devtoolModuleFilenameTemplate: (info) => {
       return path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-    }
+    },
   },
 
   resolve: {
@@ -36,13 +36,13 @@ const webpackConfig = {
       'node_modules',
       PATHS.NODE_MODULES,
       PATHS.SRC_CLIENT,
-      PATHS.SRC_SERVER
+      PATHS.SRC_SERVER,
     ],
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.scss'],
     plugins: [
       // Prevents importing files outside src
-      new ModuleScopePlugin(PATHS.SRC_CLIENT)
-    ]
+      new ModuleScopePlugin(PATHS.SRC_CLIENT),
+    ],
   },
 
   externals: [nodeExternals()],
@@ -56,41 +56,38 @@ const webpackConfig = {
       LOADERS.JS_LOADER(),
       // LOADERS.STYLUS_LOADER(true),
       LOADERS.SASS_LOADER(true),
-      LOADERS.CSS_LOADER(true)
-    ]
+      LOADERS.CSS_LOADER(true),
+    ],
   },
 
   plugins: [
     new webpack.DefinePlugin({
       __SERVER__: true,
-      ...config.get('webpackGlobals')
+      ...config.get('webpackGlobals'),
     }),
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1
+      maxChunks: 1,
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new MiniCssExtractPlugin({
-      filename: 'server.bundle.css'
+      filename: 'server.bundle.css',
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
       cssProcessor: require('cssnano'),
       cssProcessorOptions: { discardComments: { removeAll: true } },
-      canPrint: true
-    })
+      canPrint: true,
+    }),
   ],
 
   performance: {
-    hints: ENV.isProdLike ? 'warning' : false
+    hints: ENV.isProdLike ? 'warning' : false,
   },
   node: {
-    console: false,
     global: false,
-    process: false,
-    Buffer: false,
     __filename: false,
-    __dirname: false
-  }
+    __dirname: false,
+  },
 }
 
 module.exports = webpackConfig

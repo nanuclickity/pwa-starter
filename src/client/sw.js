@@ -15,10 +15,10 @@ const Strategies = {
     cacheName: 'fonts',
     plugins: [
       new workbox.expiration.Plugin({
-        maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
-      })
-    ]
-  })
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+      }),
+    ],
+  }),
 }
 
 // Precache

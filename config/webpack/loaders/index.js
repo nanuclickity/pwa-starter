@@ -5,5 +5,5 @@ module.exports = {
   FILE_LOADER: require('./file-loader'),
   URL_LOADER: require('./url-loader'),
   // STYLUS_LOADER: require('./stylus-loader')
-  SASS_LOADER: require('./sass-loader')
+  SASS_LOADER: require('./sass-loader'),
 }

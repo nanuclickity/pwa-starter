@@ -16,28 +16,28 @@ const _STYLUS_LOADER = (isServer = false) => ({
     import: PATHS.STYLUS_BASE,
     error: true,
     compress: process.env.NODE_ENV === 'production',
-    'include css': true
-  }
+    'include css': true,
+  },
 })
 
-const LOADER_DEV = isServer => ({
+const LOADER_DEV = (isServer) => ({
   test: /\.styl$/,
   use: [
     require.resolve('style-loader'),
     _CSS_LOADER(isServer),
     _POSTCSS_LOADER(isServer),
-    _STYLUS_LOADER(isServer)
-  ]
+    _STYLUS_LOADER(isServer),
+  ],
 })
 
-const LOADER_PROD = isServer => ({
+const LOADER_PROD = (isServer) => ({
   test: /\.styl$/,
   use: [
     MiniCssExtractPlugin.loader,
     _CSS_LOADER(isServer),
     _POSTCSS_LOADER(isServer),
-    _STYLUS_LOADER(isServer)
-  ]
+    _STYLUS_LOADER(isServer),
+  ],
 })
 
 // To use pre-rendering on server

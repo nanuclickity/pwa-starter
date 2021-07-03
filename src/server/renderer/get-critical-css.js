@@ -24,19 +24,16 @@ const CSS_CACHE = {}
  * Creates an md5 hash from express request object.
  * @param {*} req
  */
-const createKeyFromReq = req => {
+const createKeyFromReq = (req) => {
   const pathname = url.parse(req.originalUrl).pathname
-  return crypto
-    .createHash('md5')
-    .update(pathname)
-    .digest('hex')
+  return crypto.createHash('md5').update(pathname).digest('hex')
 }
 
 /**
  * Get size of string in KBs
  * @param {String} str
  */
-const getKBSizeFromStringLength = str => {
+const getKBSizeFromStringLength = (str) => {
   return Buffer.byteLength(str, 'utf8') / 1024
 }
 
@@ -59,11 +56,11 @@ const reportCSSCacheStatistics = () => {
  * Generates critical css for given html
  * @param {String} html result of `renderToString`
  */
-export const generateCriticalCSS = html => {
+export const generateCriticalCSS = (html) => {
   const options = { minify: config.get('MINIFY_CRITICAL_CSS') }
   return new Promise((resolve, reject) => {
     debug('Purifying')
-    purify(html, allCss, options, function(purifiedCss) {
+    purify(html, allCss, options, function (purifiedCss) {
       debug('Purified css')
       if (typeof purifiedCss === 'string') {
         return resolve(purifiedCss)
@@ -73,13 +70,13 @@ export const generateCriticalCSS = html => {
   })
 }
 
-const collectStream = stream =>
+const collectStream = (stream) =>
   new Promise((resolve, reject) => {
     var data = ''
-    stream.on('data', chunk => {
+    stream.on('data', (chunk) => {
       data += chunk
     })
-    stream.on('error', err => {
+    stream.on('error', (err) => {
       reject(err)
     })
     stream.on('end', () => {
@@ -87,7 +84,7 @@ const collectStream = stream =>
     })
   })
 
-export const generateCriticalCSSFromStream = stream => {
+export const generateCriticalCSSFromStream = (stream) => {
   return collectStream(stream).then(generateCriticalCSS)
 }
 
@@ -123,7 +120,7 @@ export default function getCriticalCSS(context, options = {}) {
   }
 
   return resultPromise
-    .then(criticalCSS => {
+    .then((criticalCSS) => {
       // Insert the new css in cache
       if (shouldGenerate) {
         CSS_CACHE[key] = criticalCSS

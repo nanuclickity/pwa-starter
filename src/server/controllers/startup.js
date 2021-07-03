@@ -20,19 +20,17 @@ const WORKBOX_FILE_PATH = path.join(
   '../node_modules/workbox-sw/build/workbox-sw.js'
 )
 
-const serveCachedFile = (filePath, mimeType = 'text/plain') => (
-  req,
-  res,
-  next
-) => {
-  debug('Serving cached file: ', filePath, mimeType)
-  CachedFileResponse(filePath)
-    .then(text => {
-      res.type(mimeType)
-      res.send(text)
-    })
-    .catch(err => next(err))
-}
+const serveCachedFile =
+  (filePath, mimeType = 'text/plain') =>
+  (req, res, next) => {
+    debug('Serving cached file: ', filePath, mimeType)
+    CachedFileResponse(filePath)
+      .then((text) => {
+        res.type(mimeType)
+        res.send(text)
+      })
+      .catch((err) => next(err))
+  }
 
 export const serveServiceWorker = () => {
   const router = Router()

@@ -4,8 +4,8 @@ const chalk = require('chalk')
 // Dont run if these are supplied in cmd
 const IGNORE_LIST = ['rm -rf /']
 
-const shouldIgnoreCommand = cmd => {
-  const dangerous = IGNORE_LIST.some(x => cmd === x)
+const shouldIgnoreCommand = (cmd) => {
+  const dangerous = IGNORE_LIST.some((x) => cmd === x)
   if (dangerous) return true
 
   const cleanedPath = cmd.replace(process.cwd(), '') //eslitn-disable-line
@@ -44,5 +44,5 @@ const run = (cmd = false, log = false) => {
 }
 
 module.exports = {
-  run
+  run,
 }

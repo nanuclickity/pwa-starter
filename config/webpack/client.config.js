@@ -27,7 +27,7 @@ const vendors = [
   'prop-types',
   'classnames',
   'redux',
-  'react-redux'
+  'react-redux',
 ]
 
 function createVendorsRegExp(additional = []) {
@@ -46,7 +46,7 @@ const webpackConfig = {
 
   context: PATHS.SRC,
   entry: {
-    main: [`${PATHS.SRC_CLIENT}/index.js`]
+    main: [`${PATHS.SRC_CLIENT}/index.js`],
   },
   output: {
     chunkFilename: `[name].[${hash}].chunk.js`,
@@ -56,9 +56,9 @@ const webpackConfig = {
     path: PATHS.BUILD_PUBLIC,
     pathinfo: true,
     publicPath: config.get('webpackPublicPath'),
-    devtoolModuleFilenameTemplate: info => {
+    devtoolModuleFilenameTemplate: (info) => {
       return path.resolve(info.absoluteResourcePath).replace(process.cwd(), '')
-    }
+    },
   },
 
   resolve: {
@@ -70,13 +70,13 @@ const webpackConfig = {
       '.web.jsx',
       '.jsx',
       '.styl',
-      '.scss'
+      '.scss',
     ],
     plugins: [new ModuleScopePlugin(PATHS.SRC_CLIENT)],
     alias: {
       react: require.resolve('react'),
-      'react-dom': require.resolve('react-dom')
-    }
+      'react-dom': require.resolve('react-dom'),
+    },
   },
 
   module: {
@@ -88,28 +88,28 @@ const webpackConfig = {
       LOADERS.JS_LOADER(),
       // LOADERS.STYLUS_LOADER(),
       LOADERS.SASS_LOADER(),
-      LOADERS.CSS_LOADER()
-    ]
+      LOADERS.CSS_LOADER(),
+    ],
   },
 
   plugins: [
     new webpack.DefinePlugin({
       __SERVER__: false,
-      ...config.get('webpackGlobals')
+      ...config.get('webpackGlobals'),
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-      publicPath: config.get('webpackPublicPath')
+      publicPath: config.get('webpackPublicPath'),
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
-        context: PATHS.SRC
+        context: PATHS.SRC,
       },
       minimize: ENV.isProdLike,
-      debug: ENV.isDevelopment
-    })
-  ]
+      debug: ENV.isDevelopment,
+    }),
+  ],
 }
 
 webpackConfig.optimization = {
@@ -120,14 +120,14 @@ webpackConfig.optimization = {
       vendors: {
         test: createVendorsRegExp(),
         name: 'vendors',
-        enforce: true
-      }
-    }
-  }
+        enforce: true,
+      },
+    },
+  },
 }
 
 webpackConfig.performance = {
-  hints: ENV.isProdLike ? 'warning' : false
+  hints: ENV.isProdLike ? 'warning' : false,
 }
 
 if (ENV.isProdLike) {
@@ -141,9 +141,9 @@ if (ENV.isProdLike) {
         name: 'styles',
         test: /\.css$/,
         chunks: 'all',
-        enforce: true
-      }
-    }
+        enforce: true,
+      },
+    },
   }
 
   // webpackConfig.entry.vendors = ['react', 'react-dom']
@@ -154,15 +154,15 @@ if (ENV.isProdLike) {
     // ),
     new MiniCssExtractPlugin({
       filename: `[name].[${hash}].bundle.css`,
-      chunkFilename: `[name].[${hash}].chunk.[id].css`
+      chunkFilename: `[name].[${hash}].chunk.[id].css`,
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.optimize\.css$/g,
       cssProcessor: require('cssnano'),
       cssProcessorOptions: { discardComments: { removeAll: true } },
-      canPrint: true
+      canPrint: true,
     }),
-    ...webpackConfig.plugins
+    ...webpackConfig.plugins,
   ]
 } else {
   // webpackConfig.entry.vendors = vendors
@@ -172,10 +172,10 @@ if (ENV.isProdLike) {
     // require.resolve('webpack/hot/dev-server'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // require.resolve('react-error-overlay'),
-    ...webpackConfig.entry.main
+    ...webpackConfig.entry.main,
   ]
   webpackConfig.optimization.splitChunks.cacheGroups.default = {
-    reuseExistingChunk: true
+    reuseExistingChunk: true,
   }
   webpackConfig.resolve.alias['react-dom'] = '@hot-loader/react-dom'
 }
@@ -190,7 +190,7 @@ webpackConfig.devServer = {
   hot: true,
   overlay: false,
   watchOptions: {
-    ignored: /node_modules/
+    ignored: /node_modules/,
   },
   before(app, server) {
     // This lets us fetch source contents from webpack for the error overlay
@@ -202,8 +202,8 @@ webpackConfig.devServer = {
   host: '0.0.0.0',
   disableHostCheck: true,
   proxy: {
-    '**': `http://0.0.0.0:${config.get('PORT')}`
-  }
+    '**': `http://0.0.0.0:${config.get('PORT')}`,
+  },
 }
 
 module.exports = webpackConfig

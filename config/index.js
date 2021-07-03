@@ -15,7 +15,7 @@ var config = {
     }
 
     if (typeof key === 'object' && !Array.isArray(key)) {
-      Object.keys(key).forEach(k => {
+      Object.keys(key).forEach((k) => {
         this.set(k, key[k])
       })
     } else {
@@ -32,12 +32,12 @@ var config = {
   },
   toJSON() {
     return Object.keys(this)
-      .filter(k => typeof k !== 'function')
+      .filter((k) => typeof k !== 'function')
       .reduce((acc, k) => {
         acc[k] = this[k]
         return acc
       }, {})
-  }
+  },
 }
 
 // Ensure 'this'
@@ -51,11 +51,11 @@ config.webpackGlobals = {
   'process.env': {
     NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     BABEL_ENV: JSON.stringify(process.env.BABEL_ENV),
-    DEBUG: JSON.stringify(process.env.DEBUG)
+    DEBUG: JSON.stringify(process.env.DEBUG),
   },
   __DEV__: config.ENV.isDevelopment,
   __PROD__: config.ENV.isProdLike,
-  __TRACK__: config.ENV.TRACK
+  __TRACK__: config.ENV.TRACK,
 }
 config.webpackPublicPath = '/public/'
 

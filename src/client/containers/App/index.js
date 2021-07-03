@@ -14,7 +14,7 @@ import getRoutes from 'routes/index'
 class App extends Component {
   static propTypes = {
     location: PropTypes.object,
-    auth: PropTypes.any
+    auth: PropTypes.any,
   }
 
   render() {
@@ -29,9 +29,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   location: state.router.location,
-  auth: state.Auth
+  auth: state.Auth,
 })
 
 export default connect(mapStateToProps)(App)

@@ -4,7 +4,7 @@ import config from '../config'
 
 const debug = require('debug')('app:helpers')
 
-export const readWebpackAssets = app => {
+export const readWebpackAssets = (app) => {
   const manifestPath = path.join(
     config.PATHS.BUILD_PUBLIC,
     'asset-manifest.json'

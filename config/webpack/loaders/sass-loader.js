@@ -10,9 +10,9 @@ const _SASS_LOADER = (isServer = false) => ({
   options: {
     sourceMap: !isServer && ENV.isDevelopment,
     sassOptions: {
-      includePaths: [PATHS.SCSS_BASE]
-    }
-  }
+      includePaths: [PATHS.SCSS_BASE],
+    },
+  },
 })
 
 // const _STYLUS_LOADER = (isServer = false)=> ({
@@ -27,24 +27,24 @@ const _SASS_LOADER = (isServer = false) => ({
 // 	}
 // })
 
-const LOADER_DEV = isServer => ({
+const LOADER_DEV = (isServer) => ({
   test: /\.(sass|scss)$/,
   use: [
     require.resolve('style-loader'),
     _CSS_LOADER(isServer),
     _POSTCSS_LOADER(isServer),
-    _SASS_LOADER(isServer)
-  ]
+    _SASS_LOADER(isServer),
+  ],
 })
 
-const LOADER_PROD = isServer => ({
+const LOADER_PROD = (isServer) => ({
   test: /\.(sass|scss)$/,
   use: [
     MiniCssExtractPlugin.loader,
     _CSS_LOADER(isServer),
     _POSTCSS_LOADER(isServer),
-    _SASS_LOADER(isServer)
-  ]
+    _SASS_LOADER(isServer),
+  ],
 })
 
 // To use pre-rendering on server

@@ -20,7 +20,7 @@ function checkAndInject(filePath) {
   const contents = fs.readFileSync(filePath, 'utf-8')
   const parsed = dotenv.parse(contents)
   const injected = {}
-  Object.keys(parsed).forEach(key => {
+  Object.keys(parsed).forEach((key) => {
     let value = parsed[key]
 
     if (value === 'true') {
@@ -77,7 +77,7 @@ function readConfig(filePath, config) {
   }
 }
 
-module.exports = config => {
+module.exports = (config) => {
   if (config.ENV.isProdLike) {
     readConfig(`${config.PATHS.ROOT}/.env.common`, config)
     readConfig(`${config.PATHS.ROOT}/.env`, config)

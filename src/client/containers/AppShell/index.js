@@ -7,7 +7,7 @@ import Sidebar from 'components/Sidebar'
 
 class AppShell extends Component {
   state = {
-    isSidebarOpen: false
+    isSidebarOpen: false,
   }
 
   closeSidebar = () => {
@@ -38,12 +38,12 @@ AppShell.propTypes = {
   children: PropTypes.node,
   headerProps: PropTypes.object,
   sidebarProps: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
 }
 
 AppShell.defaultProps = {
   headerProps: {},
-  sidebarProps: {}
+  sidebarProps: {},
 }
 
 export default AppShell

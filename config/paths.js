@@ -21,10 +21,10 @@ const paths = {
 
   NODE_MODULES: `${ROOT}/node_modules`,
 
-  SCSS_BASE: `${ROOT}/src/client/scss`
+  SCSS_BASE: `${ROOT}/src/client/scss`,
 }
 
-Object.keys(paths).forEach(key => {
+Object.keys(paths).forEach((key) => {
   paths[key] = path.normalize(paths[key])
 })
 

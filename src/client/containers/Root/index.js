@@ -16,7 +16,7 @@ const RootContainer = ({ store, history }) => (
 
 RootContainer.propTypes = {
   store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 }
 
 export default hot(module)(RootContainer)

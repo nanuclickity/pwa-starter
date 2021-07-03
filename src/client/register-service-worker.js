@@ -13,13 +13,13 @@ function onServiceWorkerUpdate(registration) {
 function fetchAndInstallSW() {
   return navigator.serviceWorker
     .register('./sw.js')
-    .then(registration => {
+    .then((registration) => {
       debug('Registered Successfully', registration)
 
       // This gets fired up, when latest service worker has different files in precache
       registration.onupdatefound = () => onServiceWorkerUpdate(registration)
     })
-    .catch(err => {
+    .catch((err) => {
       debug('Cannot register SW', err)
       console.error(err)
     })
