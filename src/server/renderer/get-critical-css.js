@@ -2,7 +2,8 @@ import fs from 'fs'
 import url from 'url'
 import path from 'path'
 import crypto from 'crypto'
-import purify from 'purify-css'
+
+import { PurgeCSS } from 'purgecss'
 
 import config from '../config'
 
@@ -57,16 +58,26 @@ const reportCSSCacheStatistics = () => {
  */
 export const generateCriticalCSS = (html) => {
   const options = { minify: config.get('MINIFY_CRITICAL_CSS') }
-  return new Promise((resolve, reject) => {
-    debug('Purifying')
-    purify(html, allCss, options, function (purifiedCss) {
-      debug('Purified css')
-      if (typeof purifiedCss === 'string') {
-        return resolve(purifiedCss)
-      }
-      return reject(purifiedCss)
-    })
-  })
+
+  debug('Purging CSS...')
+  try {
+    const results = new PurgeCSS().purge({ content: [html], css: [allCss] })
+    debug('Purged')
+    return results.shift().css
+  } catch (err) {
+    debug('Failed to purge: ', err)
+  }
+
+  // return new Promise((resolve, reject) => {
+  //   debug('Purifying')
+  //   purify(html, allCss, options, function (purifiedCss) {
+  //     debug('Purified css')
+  //     if (typeof purifiedCss === 'string') {
+  //       return resolve(purifiedCss)
+  //     }
+  //     return reject(purifiedCss)
+  //   })
+  // })
 }
 
 const collectStream = (stream) =>
