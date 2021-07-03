@@ -3,7 +3,6 @@ import url from 'url'
 import path from 'path'
 import crypto from 'crypto'
 import purify from 'purify-css'
-import Promise from 'bluebird'
 
 import config from '../config'
 

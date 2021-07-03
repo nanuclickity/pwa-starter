@@ -39,14 +39,16 @@ const _CSS_LOADER = (isServer = false) => ({
 const _POSTCSS_LOADER = (isServer = false) => ({
   loader: require.resolve('postcss-loader'),
   options: {
-    plugins: () => [
-      require('postcss-flexbugs-fixes'),
-      autoprefixer({
-        //browsers: ['> 3%', 'last 4 versions', 'iOS 7'],
-        flexbox: 'no-2009',
-      }),
-    ],
-    sourceMap: ENV.isDevelopment && !isServer,
+    postcssOptions: {
+      plugins: () => [
+        require('postcss-flexbugs-fixes'),
+        autoprefixer({
+          //browsers: ['> 3%', 'last 4 versions', 'iOS 7'],
+          flexbox: 'no-2009',
+        }),
+      ],
+      sourceMap: ENV.isDevelopment && !isServer,
+    },
   },
 })
 

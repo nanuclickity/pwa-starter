@@ -7,10 +7,10 @@ const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const LOADERS = require('./loaders')
 const config = require('../index')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const { ENV, PATHS } = config
 
@@ -41,7 +41,7 @@ const webpackConfig = {
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.scss'],
     plugins: [
       // Prevents importing files outside src
-      new ModuleScopePlugin(PATHS.SRC_CLIENT),
+      // new ModuleScopePlugin(PATHS.SRC_CLIENT, PATHS.NODE_MODULES),
     ],
   },
 
@@ -72,13 +72,17 @@ const webpackConfig = {
     new MiniCssExtractPlugin({
       filename: 'server.bundle.css',
     }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorOptions: { discardComments: { removeAll: true } },
-      canPrint: true,
-    }),
   ],
+
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin({
+        test: /\.css$/g,
+        minimizerOptions: { discardComments: { removeAll: true } },
+      }),
+    ],
+  },
 
   performance: {
     hints: ENV.isProdLike ? 'warning' : false,

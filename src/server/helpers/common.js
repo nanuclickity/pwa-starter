@@ -1,15 +1,9 @@
 import _ from 'lodash'
 // import path from 'path'
-import fs from 'fs-extra'
+import fs from 'fs/promises'
 import crypto from 'crypto'
 import chalk from 'chalk'
 import Table from 'easy-table'
-
-import Promise from 'bluebird'
-
-// import { Config } from '../config'
-
-Promise.promisifyAll(fs)
 
 // File Response Cache
 export const FILE_RESPONSES_CACHE = {}
@@ -22,7 +16,7 @@ export const CachedFileResponse = (filePath) => {
   }
 
   // First time the file is requested, we read and store in cache
-  return fs.readFileAsync(filePath, 'utf-8').then((text) => {
+  return fs.readFile(filePath, 'utf-8').then((text) => {
     FILE_RESPONSES_CACHE[key] = text
     console.log(chalk.yellow('Cached File Response: ' + filePath))
     return text

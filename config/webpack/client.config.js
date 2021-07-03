@@ -8,9 +8,9 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware')
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware')
 
-const ManifestPlugin = require('webpack-manifest-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const config = require('../index')
 
@@ -72,7 +72,9 @@ const webpackConfig = {
       '.styl',
       '.scss',
     ],
-    plugins: [new ModuleScopePlugin(PATHS.SRC_CLIENT)],
+    plugins: [
+      // new ModuleScopePlugin(PATHS.SRC_CLIENT, PATHS.NODE_MODULES)
+    ],
     alias: {
       react: require.resolve('react'),
       'react-dom': require.resolve('react-dom'),
@@ -98,7 +100,7 @@ const webpackConfig = {
       ...config.get('webpackGlobals'),
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       fileName: 'asset-manifest.json',
       publicPath: config.get('webpackPublicPath'),
     }),
@@ -115,7 +117,6 @@ const webpackConfig = {
 webpackConfig.optimization = {
   runtimeChunk: false,
   splitChunks: {
-    name: true,
     cacheGroups: {
       vendors: {
         test: createVendorsRegExp(),
@@ -156,11 +157,9 @@ if (ENV.isProdLike) {
       filename: `[name].[${hash}].bundle.css`,
       chunkFilename: `[name].[${hash}].chunk.[id].css`,
     }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.optimize\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorOptions: { discardComments: { removeAll: true } },
-      canPrint: true,
+    new CssMinimizerPlugin({
+      test: /\.optimize\.css$/g,
+      minimizerOptions: { discardComments: { removeAll: true } },
     }),
     ...webpackConfig.plugins,
   ]
