@@ -12,9 +12,6 @@
     "clean": "rm -rf ./build && mkdir -p build/views build/public",
     "copy-public": "cp -r ./src/public ./build/",
     "copy-views": "cp -r ./src/server/views ./build/",
-    "copy-watch-public": "cpx \"./src/public/**/*.*\" ./build/public/ --watch",
-    "copy-watch-views": "cpx ./src/server/views/**/*.* ./build/views/ --watch",
-    "copy-watch": "npm-run-all --parallel copy-watch-views copy-watch-public",
     "copy": "npm-run-all copy-views copy-public",
     "dev-server": "nodemon build/server.bundle.js",
     "generate-pages": "node tools/scripts/generate-pages",
@@ -25,9 +22,9 @@
     "profile": "NODE_ENV=production webpack --config config/webpack/client.config.js --display normal --profile --json > stats.json",
     "server": "NODE_ENV=production node -r source-map-support/register build/server.bundle.js",
     "start": "npm run server",
-    "watch-client": "webpack-dev-server --hot --config config/webpack/client.config.js",
+    "watch-client": "webpack serve --hot --config config/webpack/client.config.js",
     "watch-server": "webpack --watch --config config/webpack/server.config.js",
-    "watch": "npm-run-all clean build-client --parallel copy-watch watch-client watch-server"
+    "watch": "npm-run-all clean build-client --parallel watch-client watch-server"
   },
   "private": true,
   "eslintIgnore": [
@@ -54,7 +51,6 @@
     "compression": "^1.7.4",
     "connected-react-router": "^6.9.1",
     "cookie-parser": "^1.4.5",
-    "cpx": "^1.5.0",
     "css-loader": "5.2.6",
     "css-minimizer-webpack-plugin": "^3.0.2",
     "cssnano": "^5.0.6",
@@ -79,7 +75,7 @@
     "pretty-error": "^3.0.4",
     "prop-types": "15.7.2",
     "pug": "3.0.2",
-    "purify-css": "^1.2.5",
+    "purgecss": "^4.0.3",
     "react": "17.0.2",
     "react-dev-utils": "11.0.4",
     "react-dom": "17.0.2",
@@ -96,8 +92,7 @@
     "uuid": "^8.3.2",
     "webpack": "5.42.0",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-cli": "4.7.2",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-cli": "^4.7.2",
     "webpack-manifest-plugin": "^3.1.1",
     "webpack-node-externals": "3.0.0",
     "workbox-webpack-plugin": "6.1.5"
