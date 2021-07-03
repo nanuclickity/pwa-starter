@@ -59,14 +59,23 @@ const reportCSSCacheStatistics = () => {
 export const generateCriticalCSS = (html) => {
   const options = { minify: config.get('MINIFY_CRITICAL_CSS') }
 
-  debug('Purging CSS...')
-  try {
-    const results = new PurgeCSS().purge({ content: [html], css: [allCss] })
-    debug('Purged')
-    return results.shift().css
-  } catch (err) {
-    debug('Failed to purge: ', err)
-  }
+  debug('DIR_NAME_IS', __dirname);
+  fs.writeFileSync(path.resolve(__dirname, '../test-html.html'), html, 'utf-8')
+  fs.writeFileSync(path.resolve(__dirname, '../test-css.html'), allCss, 'utf-8')
+
+  return allCss
+
+  // debug('Purging CSS...')
+  // try {
+  //   const results = await new PurgeCSS().purge({
+  //     content: html,
+  //     css: allCss,
+  //   })
+  //   debug('Purged', results)
+  //   return results.shift().css
+  // } catch (err) {
+  //   debug('Failed to purge: ', err)
+  // }
 
   // return new Promise((resolve, reject) => {
   //   debug('Purifying')
@@ -141,5 +150,8 @@ export default function getCriticalCSS(context, options = {}) {
       context.criticalCSS = criticalCSS
       return context
     })
-    .tap(() => reportCSSCacheStatistics())
+    .then((results) => {
+      reportCSSCacheStatistics()
+      return results
+    })
 }

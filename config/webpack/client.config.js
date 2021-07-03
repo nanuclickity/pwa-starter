@@ -63,6 +63,9 @@ const webpackConfig = {
 
   resolve: {
     modules: ['node_modules', PATHS.NODE_MODULES, PATHS.SRC_CLIENT],
+    fallback: {
+      url: false,
+    },
     extensions: [
       '.web.js',
       '.js',

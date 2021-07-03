@@ -53,7 +53,7 @@ const webpackConfig = {
       LOADERS.ESLINT_LOADER(),
       LOADERS.FILE_LOADER(),
       LOADERS.URL_LOADER(),
-      LOADERS.JS_LOADER(),
+      LOADERS.JS_LOADER(true),
       // LOADERS.STYLUS_LOADER(true),
       LOADERS.SASS_LOADER(true),
       LOADERS.CSS_LOADER(true),

@@ -18,6 +18,11 @@ import renderPage from './render-page'
 
 const debug = require('debug')('app:renderer')
 
+const logStep = (msg) => (results) => {
+  debug(msg)
+  return results
+}
+
 export function StreamingRenderer(req, res, next) {
   const context = { req, res, next }
   console.time('renderCompletionTime')
@@ -39,7 +44,7 @@ export function StreamingRenderer(req, res, next) {
       return context
     })
     .then(createStore)
-    .tap(() => debug('Created Store'))
+    .then(logStep('Created Store'))
     .then(renderPage)
     .then(() => {
       const stream = context.html
@@ -77,15 +82,15 @@ export function StaticRenderer(req, res, next) {
   // Order of steps is important
   Promise.resolve(context)
     .then(createStore)
-    .tap(() => debug('Store created'))
+    .then(logStep('Store created'))
     .then(fetchData)
-    .tap(() => debug('Fetched required data'))
+    .then(logStep('Fetched required data'))
     .then(renderTemplate)
-    .tap(() => debug('Rendererd template'))
+    .then(logStep('Rendererd template'))
     .then(renderPage)
-    .tap(() => debug('Rendererd react'))
+    .then(logStep('Rendererd react'))
     .then(getCriticalCSS)
-    .tap(() => debug('Extracted critical css'))
+    .then(logStep('Extracted critical css'))
     .then((context) => {
       // If a redirect was found
       if (context.renderContext.url) {
