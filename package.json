@@ -57,7 +57,7 @@
     "dotenv": "^10.0.0",
     "easy-table": "^1.1.1",
     "eslint-loader": "^4.0.2",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "file-loader": "6.2.0",
     "fs-extra": "^10.0.0",
     "gzip-size-cli": "^5.0.0",
